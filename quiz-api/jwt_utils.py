@@ -50,3 +50,20 @@ def decode_token(auth_token):
         raise JwtError('Signature expired. Please log in again.')
     except jwt.InvalidTokenError as e:
         raise JwtError('Invalid token. Please log in again.')
+
+def auth_midleware(request):
+    token = request.headers.get('Authorization')
+    if not token:
+        raise Unauthorized("Token is missing")
+    
+    # Cut Bearer from token
+    token = token.split(" ")[1]
+    
+    if token is "dev-freepass":
+        return True
+    
+    try:
+        decode_token(token)
+    except JwtError as e:
+        raise Unauthorized(str(e))
+    return True
