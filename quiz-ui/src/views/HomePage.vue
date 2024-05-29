@@ -14,8 +14,8 @@ const registeredScores = ref([
 onMounted(async () => { // Au demarrage de la page
   console.log("Home page mounted");
 
-  const scores = await quizApiService.getScores();  // Les erreurs consoles vienne de la car on a pas encore le backend
-  registeredScores.value = scores.data;  // Les erreurs consoles vienne de la car on a pas encore le backend
+  const scores = await quizApiService.getScores();  // Les erreurs consoles viennent de la car on a pas encore le backend
+  registeredScores.value = scores.data;  // Les erreurs consoles viennent de la car on a pas encore le backend
 });
 </script>
 
