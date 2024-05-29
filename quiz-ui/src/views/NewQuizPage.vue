@@ -16,7 +16,7 @@ export default {
     launchNewQuiz() {
       console.log("Launch new quiz with", this.username);
       participationStorageService.savePlayerName(this.username);
-      const playerName = participationStorageService.getPlayerName();
+      // const playerName = participationStorageService.getPlayerName();
       this.router.push('/questions');
     }
   }

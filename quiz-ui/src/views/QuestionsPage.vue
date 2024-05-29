@@ -1,6 +1,10 @@
+<script setup>
+import QuestionsManager from '../views/QuestionsManager.vue';
+</script>
+
 <template>
-  <div class="about">
-    <h1>Questions page</h1>
+  <div>
+    <QuestionsManager />
   </div>
 </template>
 
