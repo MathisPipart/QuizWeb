@@ -32,3 +32,11 @@ export default {
     <button type="submit" class="btn btn-success mt-2" @click="launchNewQuiz">GO!</button>
   </div>
 </template>
+
+<style>
+.form-control {
+  width: 20%;
+  padding: 5px;
+  margin-right: 10px;
+}
+</style>

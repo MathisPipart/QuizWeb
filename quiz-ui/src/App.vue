@@ -33,7 +33,7 @@ import LogoImage from '/src/assets/logo.png';
   flex-direction: column;
   align-items: center;
   padding: 1rem;
-  width: 20%; /* Ajustez cette valeur selon vos besoins */
+  width: 20%;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -42,7 +42,7 @@ import LogoImage from '/src/assets/logo.png';
 }
 
 .logo-image {
-  max-width: 150px; /* Augmenter la taille du logo */
+  max-width: 150px;
   height: auto;
 }
 

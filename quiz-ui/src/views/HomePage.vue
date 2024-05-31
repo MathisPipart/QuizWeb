@@ -41,7 +41,26 @@ onMounted(async () => { // Au demarrage de la page
     </div>
   </div>
   <br>
-  <router-link to="/new-quiz">Démarrer le quiz !</router-link>
+  <router-link to="/new-quiz" class="start-quiz-link">Démarrer le quiz !</router-link>
 </template>
+
+<style scoped>
+.start-quiz-link {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #41b883;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+.start-quiz-link:hover {
+  background-color: #3a9d70;
+}
+</style>
+
 
 <style src="../css/Scores.css"></style>
