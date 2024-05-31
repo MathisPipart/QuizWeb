@@ -56,4 +56,19 @@
     text-align: right;
     font-size: 1.1em;
   }
+
+  .home-button {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 0.5rem 1rem;
+    background-color: #41b883; /* Utilisez une couleur appropriée */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+  }
+  .home-button:hover {
+    background-color: #3a9d70; /* Couleur plus foncée pour l'effet hover */
+  }
   

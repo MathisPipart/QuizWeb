@@ -20,7 +20,6 @@ const registeredScores = ref([
   { playerName: "Christ", score: 40 },
   { playerName: "Anne", score: 50 },
   { playerName: "Julia", score: 60 },
-  
 ]);
 
 const questions = [ 
@@ -54,10 +53,14 @@ const handleAnswerClicked = (selectedAnswer) => {
     }
 
     if (currentQuestionPosition.value < questions.length - 1) {
-        currentQuestionPosition.value++;
-        loadQuestionByPosition(currentQuestionPosition.value);
+        setTimeout(() => {
+            currentQuestionPosition.value++;
+            loadQuestionByPosition(currentQuestionPosition.value);
+        }, 1000); // Attendre 1 secondes avant de passer à la question suivante
     } else {
-        endQuiz();
+        setTimeout(() => {
+            endQuiz();
+        }, 1000); // Attendre 1 secondes avant de terminer le quiz
     }
 };
 
@@ -75,33 +78,52 @@ onMounted(() => {
 </script>
 
 <template>
-    <div v-if="!quizFinished">
-        <h1>Bienvenue, {{ playerName }}</h1>
-        <br>
-        <h2>Question {{ currentQuestionPosition + 1 }} / {{ totalNumberOfQuestion }}</h2>
-        <QuestionDisplay :currentQuestion="currentQuestion" @click-on-answer="handleAnswerClicked" />
-    </div>
-    <div v-else>
-        <h1>Quiz Finished!</h1>
-        <p>Thank you for participating in the quiz, {{ playerName }}. Your score is: {{ score }} / {{ totalNumberOfQuestion }}</p>
-        <h2>Scores des autres joueurs :</h2>
-        <div class="scoreboard">
-            <div
-                v-for="(playerScore, index) in registeredScores"
-                :key="playerScore.playerName"
-                :class="{
-                    first: index === 0,
-                    second: index === 1,
-                    third: index === 2,
-                    other: index >= 3
-                }"
-            >
-                <span class="position">{{ index + 1 }}</span>
-                <span class="name">{{ playerScore.playerName }}</span>
-                <span class="score">{{ playerScore.score }}</span>
-            </div>
-        </div>
-    </div>
+  <div v-if="!quizFinished">
+      <h1>Bienvenue, {{ playerName }}</h1>
+      <br>
+      <h2>Question {{ currentQuestionPosition + 1 }} / {{ totalNumberOfQuestion }}</h2>
+      <QuestionDisplay :currentQuestion="currentQuestion" @click-on-answer="handleAnswerClicked" />
+  </div>
+  <div v-else>
+      <h1>Quiz Finished!</h1>
+      <p>Thank you for participating in the quiz, {{ playerName }}. Your score is: {{ score }} / {{ totalNumberOfQuestion }}</p>
+      <h2>Scores des autres joueurs :</h2>
+      <div class="scoreboard">
+          <div
+              v-for="(playerScore, index) in registeredScores"
+              :key="playerScore.playerName"
+              :class="{
+                  first: index === 0,
+                  second: index === 1,
+                  third: index === 2,
+                  other: index >= 3
+              }"
+          >
+              <span class="position">{{ index + 1 }}</span>
+              <span class="name">{{ playerScore.playerName }}</span>
+              <span class="score">{{ playerScore.score }}</span>
+          </div>
+      </div>
+      <!-- Bouton pour revenir à la page Home -->
+      <RouterLink to="/" class="home-button">
+          Revenir à la page Home
+      </RouterLink>
+  </div>
 </template>
 
-<style src="../css/Scores.css"></style>
+<style scoped>
+.home-button {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 0.5rem 1rem;
+    background-color: #41b883;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+}
+.home-button:hover {
+    background-color: #3a9d70;
+}
+</style>
