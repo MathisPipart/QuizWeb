@@ -1,81 +1,73 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+import LogoImage from '/src/assets/logo.png';
 </script>
 
 <template>
-  <header>
-    <div class="wrapper">
+  <div class="app-container">
+    <header class="menu-container">
+      <div class="logo">
+        <!-- Affichage du logo -->
+        <img :src="LogoImage" alt="Quiz Logo" class="logo-image" />
+      </div>
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <!-- <RouterLink to="/new-quiz">New Quiz</RouterLink> -->
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/Admin">Admin</RouterLink>
       </nav>
-    </div>
-  </header>
+    </header>
 
-  <RouterView />
+    <main class="content">
+      <RouterView />
+    </main>
+  </div>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.menu-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  width: 200px; /* Ajustez cette valeur selon vos besoins */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
-  display: block;
-  margin: 0 auto 2rem;
+  margin-bottom: 2rem;
+}
+
+.logo-image {
+  max-width: 150px; /* Augmenter la taille du logo */
+  height: auto;
 }
 
 nav {
   width: 100%;
-  font-size: 12px;
+  font-size: 1rem;
   text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
 }
 
 nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
+  display: block;
+  padding: 0.5rem 0;
+  text-decoration: none;
+  color: var(--color-text);
 }
 
-nav a:first-of-type {
-  border: 0;
+nav a.router-link-exact-active {
+  font-weight: bold;
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+.content {
+  flex-grow: 1;
+  padding: 2rem;
+  margin-left: 50px; /* Espace entre le menu et le contenu */
+  justify-content: center; /* Centrer horizontalement le contenu */
+  align-items: center; /* Centrer verticalement le contenu */
 }
 </style>

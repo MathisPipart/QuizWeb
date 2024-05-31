@@ -1,0 +1,59 @@
+/* src/styles/main.css */
+.scoreboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 400px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+  }
+  .scoreboard div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 15px 20px;
+    margin: 10px 0;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+  }
+  .scoreboard div:hover {
+    transform: scale(1.05);
+  }
+  .scoreboard .first {
+    background: linear-gradient(45deg, #ffd700, #ffc700);
+    font-weight: bold;
+    color: #fff;
+  }
+  .scoreboard .second {
+    background: linear-gradient(45deg, #c0c0c0, #b0b0b0);
+    font-weight: bold;
+    color: #fff;
+  }
+  .scoreboard .third {
+    background: linear-gradient(45deg, #cd7f32, #c67a30);
+    font-weight: bold;
+    color: #fff;
+  }
+  .scoreboard .other {
+    background-color: #fff;
+  }
+  .position {
+    width: 40px;
+    text-align: center;
+    font-size: 1.2em;
+  }
+  .name {
+    flex-grow: 1;
+    text-align: left;
+    padding-left: 10px;
+    font-size: 1.1em;
+  }
+  .score {
+    width: 60px;
+    text-align: right;
+    font-size: 1.1em;
+  }
+  
