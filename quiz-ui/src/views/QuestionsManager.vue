@@ -17,9 +17,6 @@ const registeredScores = ref([
   { playerName: "John", score: 10 },
   { playerName: "Jane", score: 20 },
   { playerName: "Paul", score: 30 },
-  { playerName: "Christ", score: 40 },
-  { playerName: "Anne", score: 50 },
-  { playerName: "Julia", score: 60 },
 ]);
 
 const questions = [ 
@@ -82,12 +79,14 @@ onMounted(() => {
       <h1>Bienvenue, {{ playerName }}</h1>
       <br>
       <h2>Question {{ currentQuestionPosition + 1 }} / {{ totalNumberOfQuestion }}</h2>
-      <QuestionDisplay :currentQuestion="currentQuestion" @click-on-answer="handleAnswerClicked" />
+      <div class="question-wrapper">
+        <QuestionDisplay :currentQuestion="currentQuestion" @click-on-answer="handleAnswerClicked" />
+      </div>
   </div>
   <div v-else>
       <h1>Quiz Finished!</h1>
       <p>Thank you for participating in the quiz, {{ playerName }}. Your score is: {{ score }} / {{ totalNumberOfQuestion }}</p>
-      <h2>Scores des autres joueurs :</h2>
+      <h2>Meilleurs scores des autres joueurs</h2>
       <div class="scoreboard">
           <div
               v-for="(playerScore, index) in registeredScores"
@@ -112,6 +111,11 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.question-wrapper {
+  width: 100%;
+  max-width: 800px;
+  margin-top: 2rem;
+}
 .home-button {
     display: inline-block;
     margin-top: 2rem;

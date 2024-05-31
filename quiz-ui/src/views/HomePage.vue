@@ -10,9 +10,6 @@ const registeredScores = ref([
   { playerName: "John", score: 10 },
   { playerName: "Jane", score: 20 },
   { playerName: "Paul", score: 30 },
-  { playerName: "Christ", score: 40 },
-  { playerName: "Anne", score: 50 },
-  { playerName: "Julia", score: 60 },
 ]);
 
 onMounted(async () => { // Au demarrage de la page
@@ -25,6 +22,8 @@ onMounted(async () => { // Au demarrage de la page
 
 <template>
   <h1>Home page</h1>
+  <br>
+  <h2>Classement</h2>
   <div class="scoreboard">
     <div
       v-for="(scoreEntry, index) in registeredScores"
