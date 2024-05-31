@@ -13,9 +13,20 @@ import database_utils as dbu
 app = Flask(__name__)
 CORS(app)
 
+@app.route('/rebuild-db', methods=['POST'])
+def RebuildDB():
+    try:
+        ju.auth_midleware(request)
+    except ju.JwtError as e:
+        return {"message": str(e)}, 401
+    
+    dbu.rebuild_db()
+    
+    return "Ok", 200
+
 @app.route('/quiz-info', methods=['GET'])
 def GetQuizInfo():
-	return {"size": 0, "scores": []}, 200
+    return dbu.get_quiz_info(), 200
 
 @app.route('/login', methods=['POST'])
 def Login():
@@ -101,6 +112,24 @@ def UpdateQuestion(question_id):
     
     return Response(status=204)
 
+@app.route('/participations/all', methods=['DELETE'])
+def DeleteAllParticipations():
+    try:
+        ju.auth_midleware(request)
+    except ju.JwtError as e:
+        return {"message": str(e)}, 401
+    
+    dbu.clear_participations()
+    
+    return Response(status=204)
+
+@app.route('/participations', methods=['POST'])
+def PostParticipation():
+    payload = request.get_json()
+    playerName = payload['playerName']
+    answers = payload['answers']
+    
+    return dbu.insert_participation(playerName, answers) 
 
 if __name__ == '__main__':
     app.run()

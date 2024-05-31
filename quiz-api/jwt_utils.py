@@ -53,6 +53,7 @@ def decode_token(auth_token):
 
 def auth_midleware(request):
     token = request.headers.get('Authorization')
+    print(token)
     if not token:
         raise Unauthorized("Token is missing")
     
