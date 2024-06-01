@@ -1,10 +1,19 @@
 {
 	"folders": [
 		{
-			"path": "."
+			"path": "./quiz-api"
+		},
+		{
+			"path": "./quiz-ui"
 		}
 	],
-	"settings": {},
+	"settings": {
+		"editor.formatOnSave": true,
+		"editor.rulers": [
+			100
+		],
+		"editor.tabSize": 4
+	},
 	"launch": {
 		"version": "0.2.0",
 		"configurations": [
@@ -14,7 +23,7 @@
 				"request": "launch",
 				"module": "flask",
 				"env": {
-					"FLASK_APP": "app.py",
+					"FLASK_APP": "quiz-api/app.py",
 					"FLASK_DEBUG": "1",
 					"FLASK_ENV": "development"
 				},
