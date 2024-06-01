@@ -1,4 +1,4 @@
-import classes
+from utils.classes import Question, Answer
 
 def questionToJSON(question):
     return {
@@ -16,13 +16,13 @@ def questionToJSON(question):
     }
     
 def JSONToQuestion(json):
-    return classes.Question(
+    return Question(
         json["title"],
         json["text"],
         json["image"],
         json["position"],
         [
-            classes.Answer(answer["text"], answer["isCorrect"])
+            Answer(answer["text"], answer["isCorrect"])
             for answer in json["possibleAnswers"]
         ]
     )

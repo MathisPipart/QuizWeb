@@ -1,6 +1,7 @@
 import jwt
 import datetime
 from werkzeug.exceptions import Unauthorized
+from config import Config
 
 
 class JwtError(Exception):
@@ -12,9 +13,8 @@ class JwtError(Exception):
         super().__init__(self.message)
 
 
-secret = "QuizzerSecretKeyVerySecretIPromiseYouCantGuessThisIsWayTooLongAndRandomForAnyoneToGuessItOkByeGLHF"
-expiration_in_seconds = 3600
-
+secret = Config.SECRET_KEY
+expiration_in_seconds = Config.EXPIRATION_IN_SECONDS
 
 def build_token():
     """
@@ -53,14 +53,14 @@ def decode_token(auth_token):
 
 def auth_midleware(request):
     token = request.headers.get('Authorization')
-    print(token)
+    
     if not token:
         raise Unauthorized("Token is missing")
     
     # Cut Bearer from token
     token = token.split(" ")[1]
     
-    if token is "dev-freepass":
+    if token == "dev-freepass":
         return True
     
     try:
