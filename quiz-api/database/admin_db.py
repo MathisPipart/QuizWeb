@@ -1,5 +1,6 @@
 import sqlite3
 from config import Config
+from database.quiz_db import insert_participation
 from utils.classes import Question, Answer
 
 # Rebuilds the database, dropping all tables and recreating them
@@ -16,6 +17,65 @@ def rebuild_db():
         cur.execute("CREATE TABLE Answers (id INTEGER PRIMARY KEY, text TEXT, isCorrect INTEGER, questionId INTEGER, FOREIGN KEY(questionId) REFERENCES Questions(id) ON DELETE CASCADE)")
         cur.execute("CREATE TABLE Participations (id INTEGER PRIMARY KEY, playerName TEXT, score INTEGER)")
         conn.commit()
+    
+# Initializes the database with some sample questions and participations
+def init_db():
+	rebuild_db()
+
+	# Sample questions
+	questions = [
+		Question(
+			title="What is the capital of France?",
+			text="",
+			image="",
+			position=1,
+			possibleAnswers=[
+				Answer(text="Paris", isCorrect=True),
+				Answer(text="London", isCorrect=False),
+				Answer(text="Berlin", isCorrect=False),
+				Answer(text="Madrid", isCorrect=False)
+			]
+		),
+		Question(
+			title="What is the capital of Germany?",
+			text="",
+			image="",
+			position=2,
+			possibleAnswers=[
+				Answer(text="Paris", isCorrect=False),
+				Answer(text="London", isCorrect=False),
+				Answer(text="Berlin", isCorrect=True),
+				Answer(text="Madrid", isCorrect=False)
+			]
+		),
+		Question(
+			title="What is the capital of Spain?",
+			text="",
+			image="",
+			position=3,
+			possibleAnswers=[
+				Answer(text="Paris", isCorrect=False),
+				Answer(text="London", isCorrect=False),
+				Answer(text="Berlin", isCorrect=False),
+				Answer(text="Madrid", isCorrect=True)
+			]
+		)
+	]
+ 
+	# Insert questions
+	for question in questions:
+		insert_question(question)
+  
+	# Sample participations
+	participations = [
+		("Alice", [1, 3, 4]),
+		("Bob", [2, 3, 4]),
+		("Charlie", [1, 2, 3])
+	]
+ 
+	# Insert participations
+	for player, answers in participations:
+		insert_participation(player, answers)
         
 # Inserts a question into the database
 def insert_question(input_question):

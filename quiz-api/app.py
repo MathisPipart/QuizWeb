@@ -7,6 +7,9 @@ from config import Config
 app = Flask(__name__)
 app.config.from_object(Config)
 
+from database.admin_db import init_db
+init_db()
+
 CORS(app)
 
 app.register_blueprint(quiz_bp, url_prefix='')
