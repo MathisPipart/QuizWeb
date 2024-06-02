@@ -1,6 +1,6 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import LogoImage from '/src/assets/logo.png';
+import { RouterLink, RouterView } from "vue-router";
+import LogoImage from "/src/assets/logo.png";
 </script>
 
 <template>
