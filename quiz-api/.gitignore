@@ -3,3 +3,5 @@
 __pycache__/
 .ignore
 *.db
+venv/
+api.bat

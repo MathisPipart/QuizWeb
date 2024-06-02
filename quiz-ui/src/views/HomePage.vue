@@ -6,6 +6,7 @@ import api from '@/api';
 const scores = ref([]);
 
 onMounted(async () => {
+	console.log((await api.quiz.get()).data);
 	scores.value = await (await api.quiz.get()).data.scores;
 });
 
