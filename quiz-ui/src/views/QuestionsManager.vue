@@ -97,6 +97,7 @@ const endQuiz = () => {
         <h1>Bienvenue, {{ playerName }}</h1>
         <br>
         <h2>Question {{ currentQuestionPosition + 1 }} / {{ totalNumberOfQuestion }}</h2>
+        <h2>Score : {{ score }}</h2>
         <div class="question-wrapper">
             <QuestionDisplay :currentQuestion="currentQuestion" @click-on-answer="handleAnswerClicked" />
         </div>
