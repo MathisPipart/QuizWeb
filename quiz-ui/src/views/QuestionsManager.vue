@@ -3,8 +3,8 @@ import { ref, onMounted } from 'vue';
 import api from '@/api';
 import participationStorageService from '@/services/ParticipationStorageService';
 import QuestionDisplay from '../views/QuestionDisplay.vue';
-import ParisImage from '../assets/Paris.jpg';
-import PlaneteImage from '../assets/Planete.jpg';
+//import ParisImage from '../assets/Paris.jpg';
+//import PlaneteImage from '../assets/Planete.jpg';
 
 const playerName = ref(participationStorageService.getPlayerName() || 'Player');
 
@@ -17,52 +17,44 @@ const score = ref(0);
 const registeredScores = ref([]);
 
 const questions = ref([]);
-// const questions = [
-//     {
-//         id: 1,
-//         text: "What is the capital of France?",
-//         options: ["Paris", "London", "Berlin", "Madrid"],
-//         correctAnswer: "Paris",
-//         image: ParisImage
-//     },
-//     {
-//         id: 2,
-//         text: "What is the largest planet?",
-//         options: ["Earth", "Mars", "Jupiter", "Venus"],
-//         correctAnswer: "Jupiter",
-//         image: PlaneteImage
-//     },
-//     // Ajoutez d'autres questions ici
-// ];
 
 onMounted(async () => {
-    console.log((await api.quiz.question.getByPosition(1)).data);
-    console.log((await api.quiz.question.getByPosition(2)).data);
-    console.log((await api.quiz.question.getByPosition(3)).data);
-    const response = await api.quiz.question.getByPosition(1);
-    const rawQuestion = response.data;
-
-    const formattedQuestion = {
-        id: rawQuestion.id,
-        text: rawQuestion.title,
-        options: rawQuestion.possibleAnswers.map(answer => answer.text),
-        correctAnswer: rawQuestion.possibleAnswers.find(answer => answer.isCorrect).text,
-        image: rawQuestion.image
-    };
-
-    questions.value.push(formattedQuestion); // Ajoute la question formatée au tableau des questions
-
-    console.log(formattedQuestion.id);
-    console.log(formattedQuestion.text);
-    console.log(formattedQuestion.options);
-
-
-    registeredScores.value = await (await api.quiz.get()).data.scores;
-
+    await fetchQuestions();
     totalNumberOfQuestion.value = questions.value.length;
     loadQuestionByPosition(currentQuestionPosition.value);
+    registeredScores.value = await fetchRegisteredScores();
     console.log("Questions Manager mounted");
 });
+
+const fetchQuestions = async () => {
+    let position = 1;
+    let hasMoreQuestions = true;
+
+    while (hasMoreQuestions) {
+        try {
+            const response = await api.quiz.question.getByPosition(position);
+            const rawQuestion = response.data;
+
+            const formattedQuestion = {
+                id: rawQuestion.id,
+                text: rawQuestion.title,
+                options: rawQuestion.possibleAnswers.map(answer => answer.text),
+                correctAnswer: rawQuestion.possibleAnswers.find(answer => answer.isCorrect).text,
+                image: rawQuestion.image //ParisImage
+            };
+
+            questions.value.push(formattedQuestion);
+            position++;
+        } catch (error) {
+            hasMoreQuestions = false;
+        }
+    }
+};
+
+const fetchRegisteredScores = async () => {
+    const response = await api.quiz.get();
+    return response.data.scores;
+};
 
 const loadQuestionByPosition = (position) => {
     if (position < questions.value.length) {
@@ -94,6 +86,7 @@ const endQuiz = () => {
     console.log("Quiz finished! Your score is:", score.value);
 };
 </script>
+
 
 <template>
     <div v-if="!quizFinished">
@@ -128,6 +121,7 @@ const endQuiz = () => {
     </div>
 </template>
 
+
 <style scoped>
 .question-wrapper {
     width: 100%;
@@ -150,4 +144,6 @@ const endQuiz = () => {
 .home-button:hover {
     background-color: #3a9d70;
 }
+
 </style>
+<style src="../css/Scores.css"></style>
