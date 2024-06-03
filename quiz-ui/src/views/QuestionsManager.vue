@@ -3,8 +3,6 @@ import { ref, onMounted } from 'vue';
 import api from '@/api';
 import participationStorageService from '@/services/ParticipationStorageService';
 import QuestionDisplay from '../views/QuestionDisplay.vue';
-//import ParisImage from '../assets/Paris.jpg';
-//import PlaneteImage from '../assets/Planete.jpg';
 
 const playerName = ref(participationStorageService.getPlayerName() || 'Player');
 
@@ -23,6 +21,7 @@ onMounted(async () => {
     totalNumberOfQuestion.value = questions.value.length;
     loadQuestionByPosition(currentQuestionPosition.value);
     registeredScores.value = await fetchRegisteredScores();
+    registeredScores.value = getTop5Scores(registeredScores.value);
     console.log("Questions Manager mounted");
 });
 
@@ -40,7 +39,7 @@ const fetchQuestions = async () => {
                 text: rawQuestion.title,
                 options: rawQuestion.possibleAnswers.map(answer => answer.text),
                 correctAnswer: rawQuestion.possibleAnswers.find(answer => answer.isCorrect).text,
-                image: rawQuestion.image //ParisImage
+                image: rawQuestion.image
             };
 
             questions.value.push(formattedQuestion);
@@ -54,6 +53,10 @@ const fetchQuestions = async () => {
 const fetchRegisteredScores = async () => {
     const response = await api.quiz.get();
     return response.data.scores;
+};
+
+const getTop5Scores = (scores) => {
+    return scores.sort((a, b) => b.score - a.score).slice(0, 5);
 };
 
 const loadQuestionByPosition = (position) => {
@@ -85,6 +88,7 @@ const endQuiz = () => {
     participationStorageService.saveParticipationScore(score.value);
     console.log("Quiz finished! Your score is:", score.value);
 };
+
 </script>
 
 
@@ -99,15 +103,16 @@ const endQuiz = () => {
     </div>
     <div v-else>
         <h1>Quiz Finished!</h1>
-        <p>Thank you for participating in the quiz, {{ playerName }}. Your score is: {{ score }} / {{
-            totalNumberOfQuestion }}</p>
+        <p>Thank you for participating in the quiz, {{ playerName }}. Your score is: {{ score }} / {{ totalNumberOfQuestion }}</p>
         <h2>Meilleurs scores des autres joueurs</h2>
         <div class="scoreboard">
             <div v-for="(playerScore, index) in registeredScores" :key="playerScore.playerName" :class="{
                 first: index === 0,
                 second: index === 1,
                 third: index === 2,
-                other: index >= 3
+                fourth: index === 3,
+                fifth: index === 4,
+                other: index >= 5,
             }">
                 <span class="position">{{ index + 1 }}</span>
                 <span class="name">{{ playerScore.playerName }}</span>
@@ -120,6 +125,8 @@ const endQuiz = () => {
         </RouterLink>
     </div>
 </template>
+
+
 
 
 <style scoped>

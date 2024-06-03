@@ -1,15 +1,19 @@
 <script setup>
-
 import { ref, onMounted } from 'vue';
 import api from '@/api';
 
 const scores = ref([]);
 
 onMounted(async () => {
-	console.log((await api.quiz.get()).data);
-	scores.value = await (await api.quiz.get()).data.scores;
-});
+	const response = await api.quiz.get();
+	const allScores = response.data.scores;
 
+	// Sort scores in descending order
+	allScores.sort((a, b) => b.score - a.score);
+
+	// Take the top 5 scores
+	scores.value = allScores.slice(0, 5);
+});
 </script>
 
 <template>
@@ -21,7 +25,9 @@ onMounted(async () => {
 			first: index === 0,
 			second: index === 1,
 			third: index === 2,
-			other: index >= 3,
+			fourth: index === 3,
+			fifth: index === 4,
+			other: index >= 5,
 		}">
 			<span class="position">{{ index + 1 }}</span>
 			<span class="name">{{ scoreEntry.playerName }}</span>
