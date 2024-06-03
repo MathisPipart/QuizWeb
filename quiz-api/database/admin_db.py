@@ -70,7 +70,14 @@ def init_db():
 	participations = [
 		("Alice", [1, 3, 4]),
 		("Bob", [2, 3, 4]),
-		("Charlie", [1, 2, 3])
+		("Charlie", [1, 2, 3]),
+		("David", [1, 2, 4]),
+		("Eve", [1, 3, 4]),
+		("Frank", [2, 3, 4]),
+		("Grace", [1, 2, 3]),
+		("Heidi", [1, 2, 4]),
+		("Ivan", [1, 3, 4]),
+		("Judy", [2, 3, 4]),
 	]
  
 	# Insert participations
