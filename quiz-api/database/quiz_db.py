@@ -27,7 +27,7 @@ def get_answers(question_id):
         cur.execute("SELECT * FROM Answers WHERE questionId = ?", (question_id,))
         answers = cur.fetchall()
         
-        return [Answer(text = answer[1], isCorrect = answer[2]) for answer in answers]
+        return [Answer(text = answer[1], isCorrect = answer[2], id = answer[0]) for answer in answers]
     
     # Gets all questions from the database
 def get_questions():

@@ -9,6 +9,7 @@ def questionToJSON(question):
         "position": question.position,
         "possibleAnswers": [
             {
+                "id": answer.id,
                 "text": answer.text,
                 "isCorrect": bool(answer.isCorrect)
             } for answer in question.possibleAnswers

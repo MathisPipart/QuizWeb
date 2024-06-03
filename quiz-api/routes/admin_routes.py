@@ -1,4 +1,5 @@
 from flask import Blueprint, request, Response
+from flask_cors import cross_origin
 import hashlib
 import database.admin_db as admin_db
 import database.quiz_db as quiz_db
@@ -7,8 +8,12 @@ from utils.converters import questionToJSON, JSONToQuestion
 
 admin_bp = Blueprint('admin', __name__)
 
-@admin_bp.route('/login', methods=['POST'])
+@admin_bp.route('/login', methods=['POST', 'OPTIONS'])
+@cross_origin()
 def Login():
+    if request.method == 'OPTIONS':
+        return _build_cors_preflight_response()
+    
     payload = request.get_json()
     sentPassword = payload['password'].encode('utf-8')
     hashedPassword = hashlib.md5(sentPassword).digest()
@@ -19,8 +24,12 @@ def Login():
         token = ju.build_token()
         return {"token": token}, 200
 
-@admin_bp.route('/rebuild-db', methods=['POST'])
+@admin_bp.route('/rebuild-db', methods=['POST', 'OPTIONS'])
+@cross_origin()
 def RebuildDB():
+    if request.method == 'OPTIONS':
+        return _build_cors_preflight_response()
+    
     try:
         ju.auth_midleware(request)
     except ju.JwtError as e:
@@ -30,8 +39,12 @@ def RebuildDB():
     
     return "Ok", 200
 
-@admin_bp.route('/questions', methods=['POST'])
+@admin_bp.route('/questions', methods=['POST', 'OPTIONS'])
+@cross_origin()
 def PostQuestion():
+    if request.method == 'OPTIONS':
+        return _build_cors_preflight_response()
+    
     try:
         ju.auth_midleware(request)
     except ju.JwtError as e:
@@ -41,8 +54,12 @@ def PostQuestion():
     
     return {"id": admin_db.insert_question(question)}, 200
 
-@admin_bp.route('/questions/<int:question_id>', methods=['PUT'])
+@admin_bp.route('/questions/<int:question_id>', methods=['PUT', 'OPTIONS'])
+@cross_origin()
 def UpdateQuestion(question_id):
+    if request.method == 'OPTIONS':
+        return _build_cors_preflight_response()
+    
     try:
         ju.auth_midleware(request)
     except ju.JwtError as e:
@@ -58,8 +75,12 @@ def UpdateQuestion(question_id):
     
     return Response(status=204)
 
-@admin_bp.route('/questions/<int:question_id>', methods=['DELETE'])
+@admin_bp.route('/questions/<int:question_id>', methods=['DELETE', 'OPTIONS'])
+@cross_origin()
 def DeleteQuestion(question_id):
+    if request.method == 'OPTIONS':
+        return _build_cors_preflight_response()
+    
     try:
         ju.auth_midleware(request)
     except ju.JwtError as e:
@@ -72,8 +93,12 @@ def DeleteQuestion(question_id):
     
     return Response(status=204)
 
-@admin_bp.route('/questions/all', methods=['DELETE'])
+@admin_bp.route('/questions/all', methods=['DELETE', 'OPTIONS'])
+@cross_origin()
 def DeleteAllQuestions():
+    if request.method == 'OPTIONS':
+        return _build_cors_preflight_response()
+    
     try:
         ju.auth_midleware(request)
     except ju.JwtError as e:
@@ -83,8 +108,12 @@ def DeleteAllQuestions():
     
     return Response(status=204)
 
-@admin_bp.route('/participations/all', methods=['DELETE'])
+@admin_bp.route('/participations/all', methods=['DELETE', 'OPTIONS'])
+@cross_origin()
 def DeleteAllParticipations():
+    if request.method == 'OPTIONS':
+        return _build_cors_preflight_response()
+    
     try:
         ju.auth_midleware(request)
     except ju.JwtError as e:
@@ -93,3 +122,10 @@ def DeleteAllParticipations():
     admin_db.clear_participations()
     
     return Response(status=204)
+
+def _build_cors_preflight_response():
+    response = Response()
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add("Access-Control-Allow-Headers", "Content-Type,Authorization")
+    response.headers.add("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS")
+    return response
