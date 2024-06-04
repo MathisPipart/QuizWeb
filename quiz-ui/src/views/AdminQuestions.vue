@@ -4,13 +4,7 @@
 			<div
 				v-for="(question, qIndex) in questions"
 				:key="question.id"
-				:class="[
-					'question-card',
-					{
-						'new-question': question.status === 'new',
-						'edited-question': question.status === 'edited',
-					},
-				]"
+				class="question-card"
 			>
 				<div class="question-image">
 					<img
@@ -18,89 +12,58 @@
 						:src="question.image"
 						alt="Question Image"
 					/>
-					<ImageUploader
-						:fileDataUrl="question.image"
-						@file-change="(dataUrl) => handleFileChange(dataUrl, qIndex)"
-					/>
 				</div>
 				<div class="question-content">
-					<input
-						type="text"
-						v-model="question.title"
-						placeholder="Title"
-						@input="markEdited(qIndex)"
-					/>
-					<textarea
-						v-model="question.text"
-						placeholder="Question text"
-						@input="markEdited(qIndex)"
-					></textarea>
-					<div
-						v-for="(answer, aIndex) in question.possibleAnswers"
-						:key="answer.id"
-						class="answer"
-					>
-						<input
-							type="text"
-							v-model="answer.text"
-							placeholder="Answer text"
-							@input="markEdited(qIndex)"
-						/>
-						<input
-							type="checkbox"
-							v-model="answer.isCorrect"
-							@change="
-								ensureSingleCorrectAnswer(qIndex, aIndex);
-								markEdited(qIndex);
-							"
-						/>
-						Correct
-						<button @click="removeAnswer(qIndex, aIndex)">-</button>
+					<h2 class="card-title">{{ question.title }}</h2>
+					<p class="card-description">{{ question.text }}</p>
+					<div class="card-buttons">
+						<button class="card-button" @click="editQuestion(qIndex)">
+							Read More
+						</button>
+						<button class="delete-button" @click="confirmDelete(qIndex)">
+							<i class="fas fa-trash-alt"></i>
+						</button>
 					</div>
-					<button @click="addAnswer(qIndex)">Add Answer</button>
-				</div>
-				<div class="question-buttons">
-					<button @click="confirmDelete(qIndex)" class="delete-button">
-						Delete
-					</button>
-					<button
-						v-if="question.status !== 'current'"
-						@click="updateQuestion(qIndex)"
-					>
-						{{ question.status === "new" ? "Add" : "Update" }}
-					</button>
 				</div>
 			</div>
 			<div class="add-question-card" @click="addQuestion">
 				<div class="add-button">+</div>
 			</div>
 		</div>
-
 		<delete-modal
-			v-if="showModal"
-			@close="closeModal"
+			v-if="showDeleteModal"
+			@close="closeDeleteModal"
 			@confirm="deleteQuestion"
+		/>
+		<question-modal
+			v-if="showEditModal"
+			:question="currentQuestion"
+			@close="closeEditModal"
+			@save="updateQuestion"
 		/>
 	</div>
 </template>
 
 <script>
 	import DeleteModal from "@/components/DeleteModal.vue";
-	import ImageUploader from "@/components/ImageUploader.vue"; // Import the ImageUploader component
+	import QuestionModal from "@/components/QuestionModal.vue"; // Import the QuestionModal component
 	import api from "@/api";
 
 	export default {
 		name: "AdminQuestions",
 		components: {
 			DeleteModal,
-			ImageUploader, // Register the ImageUploader component
+			QuestionModal, // Register the QuestionModal component
 		},
 		data() {
 			return {
 				questions: [],
 				questionCount: 0,
-				showModal: false,
+				showDeleteModal: false,
+				showEditModal: false,
 				questionToDelete: null,
+				currentQuestion: null,
+				currentQuestionIndex: null,
 			};
 		},
 		async mounted() {
@@ -130,56 +93,43 @@
 					container.scrollLeft = container.scrollWidth;
 				});
 			},
-			addAnswer(qIndex) {
-				const newAnswerId = this.questions[qIndex].possibleAnswers.length + 1;
-				this.questions[qIndex].possibleAnswers.push({
-					id: newAnswerId,
-					text: "",
-					isCorrect: false,
-				});
-				this.markEdited(qIndex); // Mark as edited when adding an answer
+			editQuestion(qIndex) {
+				this.currentQuestion = { ...this.questions[qIndex] };
+				this.currentQuestionIndex = qIndex;
+				this.showEditModal = true;
 			},
-			removeAnswer(qIndex, aIndex) {
-				this.questions[qIndex].possibleAnswers.splice(aIndex, 1);
-				this.markEdited(qIndex); // Mark as edited when removing an answer
-			},
-			ensureSingleCorrectAnswer(qIndex, aIndex) {
-				this.questions[qIndex].possibleAnswers.forEach((answer, index) => {
-					if (index !== aIndex) {
-						answer.isCorrect = false;
-					}
-				});
-			},
-			markEdited(qIndex) {
-				if (this.questions[qIndex].status === "current") {
-					this.questions[qIndex].status = "edited";
+			updateQuestion(updatedQuestion) {
+				this.questions[this.currentQuestionIndex] = updatedQuestion;
+				this.showEditModal = false;
+
+				if (updatedQuestion.status === "new") {
+					this.addQuestionToServer(updatedQuestion);
+				} else {
+					this.updateQuestionOnServer(updatedQuestion);
 				}
 			},
-			async updateQuestion(index) {
-				const question = this.questions[index];
-
-				// Remove empty answers
-				question.possibleAnswers = question.possibleAnswers.filter(
-					(answer) => answer.text.trim() !== ""
-				);
-				// Ensure there is at least one correct answer
-				if (!question.possibleAnswers.some((answer) => answer.isCorrect)) {
-					question.possibleAnswers[0].isCorrect = true;
-				}
-
-				if (question.status === "new") {
+			async addQuestionToServer(question) {
+				try {
 					await api.admin.question.add(question);
-				} else if (question.status === "edited") {
-					await api.admin.question.update(question.id, question);
+					question.status = "current";
+				} catch (error) {
+					console.error("Failed to add question", error);
 				}
-				this.questions[index].status = "current"; // Mark as current after saving
+			},
+			async updateQuestionOnServer(question) {
+				try {
+					await api.admin.question.update(question.id, question);
+					question.status = "current";
+				} catch (error) {
+					console.error("Failed to update question", error);
+				}
 			},
 			confirmDelete(qIndex) {
 				this.questionToDelete = qIndex;
-				this.showModal = true;
+				this.showDeleteModal = true;
 			},
-			closeModal() {
-				this.showModal = false;
+			closeDeleteModal() {
+				this.showDeleteModal = false;
 				this.questionToDelete = null;
 			},
 			async deleteQuestion() {
@@ -190,20 +140,13 @@
 						await api.admin.question.delete(question.id);
 					}
 					this.questions.splice(qIndex, 1);
-					this.closeModal();
+					this.closeDeleteModal();
 				}
 			},
-			async fetchQuestions() {
-				this.questions = [];
-				for (let i = 1; i <= this.questionCount; i++) {
-					const question = (await api.quiz.question.get(i)).data;
-					question.status = "current"; // Initialize with status 'current'
-					this.questions.push(question);
-				}
-			},
-			handleFileChange(dataUrl, qIndex) {
-				this.questions[qIndex].image = dataUrl;
-				this.markEdited(qIndex);
+			closeEditModal() {
+				this.showEditModal = false;
+				this.currentQuestion = null;
+				this.currentQuestionIndex = null;
 			},
 		},
 	};
@@ -212,27 +155,23 @@
 <style scoped>
 	.questions-container {
 		display: flex;
-		overflow-x: auto;
-		overflow-y: hidden;
+		flex-wrap: wrap;
+		overflow-y: auto;
 		padding: 20px;
-		height: 100%;
-		/* Full height */
+		box-sizing: border-box;
+		height: 100vh;
 	}
 
 	.question-card {
+		width: calc(33.333% - 40px);
 		background-color: #fff;
-		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 		border-radius: 10px;
-		padding: 20px;
-		margin-right: 20px;
-		flex-shrink: 0;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		margin: 10px;
+		overflow: hidden;
+		transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 		display: flex;
 		flex-direction: column;
-		justify-content: space-between;
-		width: 300px;
-		height: 100%;
-		/* Ensure cards take full height */
-		transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 	}
 
 	.question-card:hover {
@@ -242,95 +181,78 @@
 
 	.question-image img {
 		width: 100%;
-		height: auto;
-		border-radius: 10px;
+		height: 200px;
+		object-fit: cover;
 	}
 
 	.question-content {
-		margin-top: 10px;
+		padding: 20px;
 		flex-grow: 1;
 	}
 
-	.question-content input[type="text"],
-	.question-content textarea {
-		width: 100%;
-		padding: 10px;
-		margin-bottom: 10px;
-		border: 1px solid #ccc;
-		border-radius: 5px;
+	.card-title {
+		font-size: 24px;
+		margin: 10px 0;
 	}
 
-	.answer {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
+	.card-description {
+		font-size: 14px;
+		color: #555;
+		margin-bottom: 20px;
 	}
 
-	.answer input[type="text"] {
-		width: calc(100% - 60px);
-	}
-
-	.answer input[type="checkbox"] {
-		margin-left: 10px;
-	}
-
-	.answer button {
-		padding: 5px 10px;
-		background-color: #f94f4f;
-		border: none;
-		border-radius: 5px;
-		cursor: pointer;
-		color: white;
-	}
-
-	.answer button:hover {
-		background-color: #f76a6a;
-	}
-
-	.question-buttons {
+	.card-buttons {
 		display: flex;
 		justify-content: space-between;
-		margin-top: 10px;
 	}
 
-	.question-buttons .delete-button {
-		background-color: #f94f4f;
-		border: none;
-		border-radius: 5px;
-		color: white;
+	.card-button {
+		display: block;
+		width: calc(50% - 5px);
 		padding: 10px;
-		cursor: pointer;
-	}
-
-	.question-buttons .delete-button:hover {
-		background-color: #f76a6a;
-	}
-
-	.question-buttons button {
-		padding: 10px 20px;
-		background-color: #77dd77;
+		text-align: center;
+		background-color: #007bff;
+		color: white;
 		border: none;
 		border-radius: 5px;
 		cursor: pointer;
+	}
+
+	.card-button:hover {
+		background-color: #0056b3;
+	}
+
+	.delete-button {
+		display: block;
+		width: calc(50% - 5px);
+		padding: 10px;
+		text-align: center;
+		background-color: #f94f4f;
+		color: white;
+		border: none;
+		border-radius: 5px;
+		cursor: pointer;
+	}
+
+	.delete-button i {
 		color: white;
 	}
 
-	.question-buttons button:hover {
-		background-color: #90ee90;
+	.delete-button:hover {
+		background-color: #f76a6a;
 	}
 
 	.add-question-card {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: 300px;
-		height: 100%;
-		/* Ensure the add card takes full height */
+		width: calc(33.333% - 40px);
+		height: 200px;
 		background-color: #f2f2f2;
 		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 		border-radius: 10px;
 		cursor: pointer;
-		flex-shrink: 0;
+		margin: 10px;
 		transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 	}
 
@@ -342,13 +264,5 @@
 	.add-button {
 		font-size: 2em;
 		color: #aaa;
-	}
-
-	.new-question {
-		background-color: #e7f7e7;
-	}
-
-	.edited-question {
-		background-color: #f7e7e7;
 	}
 </style>

@@ -1,19 +1,22 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
-import { createPinia } from 'pinia';
+import { createApp } from "vue";
+import App from "./App.vue";
+import router from "./router";
+import { createPinia } from "pinia";
 
-import './css/Scores.css';
-import './assets/main.css'
+import "./css/Scores.css";
+import "./assets/main.css";
 
-import SidebarNavVue from './components/SidebarNav.vue'
+import "@fortawesome/fontawesome-free/css/all.css";
+import "@fortawesome/fontawesome-free/js/all.js";
 
-const app = createApp(App)
-const pinia = createPinia()
+import SidebarNavVue from "./components/SidebarNav.vue";
 
-app.use(router)
-app.use(pinia)
+const app = createApp(App);
+const pinia = createPinia();
 
-app.component('SidebarNav', SidebarNavVue)
+app.use(router);
+app.use(pinia);
 
-app.mount('#app')
+app.component("SidebarNav", SidebarNavVue);
+
+app.mount("#app");

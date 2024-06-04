@@ -1,4 +1,3 @@
-<!-- src/components/ImageUploader.vue -->
 <script setup>
 	import { ref, onMounted, watch } from "vue";
 	const emit = defineEmits(["file-change"]);
