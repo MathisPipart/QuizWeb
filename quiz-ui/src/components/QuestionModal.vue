@@ -48,10 +48,11 @@
 								type="checkbox"
 								v-model="answer.isCorrect"
 								@change="setCorrectAnswer(index)"
+								class="input-checkbox"
 							/>
 						</label>
 						<button class="delete-button" @click="removeAnswer(index)">
-							Supprimer
+							Delete
 						</button>
 					</div>
 				</div>
@@ -183,7 +184,6 @@
 	.form-textarea,
 	.form-input-file {
 		width: 100%;
-		padding: 10px;
 		border: 1px solid #ccc;
 		border-radius: 5px;
 		box-sizing: border-box;
@@ -191,7 +191,15 @@
 
 	.form-textarea {
 		resize: vertical;
-		height: 100px;
+		height: 50px;
+	}
+
+	.input-checkbox {
+		width: 30px;
+		height: 30px;
+		border: 1px solid #ccc;
+		border-radius: 3px;
+		cursor: pointer;
 	}
 
 	.question-image {
