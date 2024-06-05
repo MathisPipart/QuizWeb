@@ -53,7 +53,7 @@ watch: {
 <style scoped>
 .image-container {
 width: 100%;
-height: 300px; /* Fixed height for the image container */
+height: 300px;
 display: flex;
 justify-content: center;
 align-items: center;
@@ -64,8 +64,8 @@ overflow: hidden;
 .question-image {
 width: 100%;
 height: 100%;
-object-fit: cover; /* Cover the entire container */
-object-position: center; /* Center the image within the container */
+object-fit: cover;
+object-position: center;
 }
 
 .options-container {

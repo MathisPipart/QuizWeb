@@ -41,11 +41,14 @@ const fetchQuestions = async () => {
 
 			const formattedQuestion = {
 				id: rawQuestion.id,
-				text: rawQuestion.title,
+				title: rawQuestion.title,
+				text: rawQuestion.text,
 				options: rawQuestion.possibleAnswers.map(answer => answer.text),
 				correctAnswer: rawQuestion.possibleAnswers.find(answer => answer.isCorrect).text,
 				image: rawQuestion.image
 			};
+
+			console.log("Question : ", formattedQuestion.text);
 
 			questions.value.push(formattedQuestion);
 		} catch (error) {
@@ -121,7 +124,7 @@ const endQuiz = async () => {
 	</div>
 	<div v-else>
 		<h1>Quiz Finished!</h1>
-		<p>Thank you for participating in the quiz, {{ playerName }}. Your score is: {{ score }} / {{
+		<p class="Thanks">Thank you for participating in the quiz, {{ playerName }}. Your score is: {{ score }} / {{
 			totalNumberOfQuestion }}</p>
         <div class="Boite">
             <h2>Meilleurs scores des autres joueurs</h2>
@@ -190,6 +193,9 @@ const endQuiz = async () => {
 .Score{
 	text-align: right;
 	margin-right: 2%;
+}
+.Thanks{
+	text-align: center;
 }
 </style>
 <style src="../css/Scores.css"></style>
