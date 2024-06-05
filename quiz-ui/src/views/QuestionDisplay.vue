@@ -29,7 +29,7 @@ watch: {
 
 
 <template>
-  <h2>{{ currentQuestion.text }}</h2>
+  <h2 class="currentQuestion">{{ currentQuestion.text }}</h2>
   <div class="image-container" v-if="currentQuestion.image">
     <img :src="currentQuestion.image" alt="Question image" class="question-image">
   </div>
@@ -94,5 +94,11 @@ background-color: #28a745;
 
 .question-option.incorrect {
 background-color: #dc3545;
+}
+
+.currentQuestion{
+text-align: center;
+margin-top: -3%;
+margin-bottom: 4%;
 }
 </style>

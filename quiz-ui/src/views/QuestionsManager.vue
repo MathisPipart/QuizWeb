@@ -110,8 +110,9 @@ const endQuiz = async () => {
 
 <template>
 	<div v-if="!quizFinished">
-		<h1>Bienvenue, {{ playerName }}</h1>
+		<h1>{{ currentQuestion.title }}</h1>
 		<br>
+		<h4 class="Question">Participant : {{ playerName }}</h4>
 		<h4 class="Question">Question {{ currentQuestionPosition + 1 }} / {{ totalNumberOfQuestion }}</h4>
 		<h4 class="Score">Score : {{ score }}</h4>
 		<div class="BoxQuestion">
@@ -159,7 +160,7 @@ const endQuiz = async () => {
 	max-width: 800px;
 	margin: 0 auto;
 	text-align: center;
-	margin-top: -2%;
+	margin-top: -7%;
 }
 
 .question-wrapper {
