@@ -48,8 +48,6 @@ const fetchQuestions = async () => {
 				image: rawQuestion.image
 			};
 
-			console.log("Question : ", formattedQuestion.text);
-
 			questions.value.push(formattedQuestion);
 		} catch (error) {
 			console.error("Error fetching question data: ", error);
