@@ -5,7 +5,7 @@
 	</div>
 	<div class="admin-page">
 		<admin-questions :isLeaderboardHidden="isLeaderboardHidden" ref="adminQuestions" />
-		<admin-leaderboard @toggle="toggleLeaderboard" />
+		<admin-leaderboard @toggle="toggleLeaderboard" ref="adminLeaderboard" />
 	</div>
 </template>
 
@@ -32,6 +32,7 @@ export default {
 		},
 		async handleReset() {
 			await this.$refs.adminQuestions.fetchQuestions();
+			await this.$refs.adminLeaderboard.fetchScores();
 		}
 	},
 };

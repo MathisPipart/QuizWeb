@@ -43,13 +43,16 @@ export default {
 		};
 	},
 	async mounted() {
-		const data = (await api.quiz.get()).data;
-
-		this.scores = data.scores;
-		this.scores.sort((a, b) => b.score - a.score);
-		this.questionCount = data.size;
+		await this.fetchScores();
 	},
 	methods: {
+		async fetchScores() {
+			const data = (await api.quiz.get()).data;
+
+			this.scores = data.scores;
+			this.scores.sort((a, b) => b.score - a.score);
+			this.questionCount = data.size;
+		},
 		confirmResetLeaderboard() {
 			this.showResetModal = true;
 		},
