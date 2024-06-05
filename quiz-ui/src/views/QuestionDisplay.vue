@@ -66,6 +66,7 @@ width: 100%;
 height: 100%;
 object-fit: cover;
 object-position: center;
+border-radius: 5px;
 }
 
 .options-container {
@@ -82,6 +83,7 @@ background-color: #2e62af;
 border-radius: 5px;
 transition: background-color 0.3s;
 text-align: center;
+color: white;
 }
 
 .question-option:hover {

@@ -112,9 +112,11 @@ const endQuiz = async () => {
 	<div v-if="!quizFinished">
 		<h1>{{ currentQuestion.title }}</h1>
 		<br>
-		<h4 class="Question">Participant : {{ playerName }}</h4>
-		<h4 class="Question">Question {{ currentQuestionPosition + 1 }} / {{ totalNumberOfQuestion }}</h4>
-		<h4 class="Score">Score : {{ score }}</h4>
+		<div class="BoxInfo">
+			<h4 class="Joueur">{{ playerName }}</h4>
+			<h4 class="Question">{{ currentQuestionPosition + 1 }} / {{ totalNumberOfQuestion }}</h4>
+			<h4 class="Score">Score : {{ score }}</h4>
+		</div>
 		<div class="BoxQuestion">
 			<div class="question-wrapper">
 				<QuestionDisplay :currentQuestion="currentQuestion" @click-on-answer="handleAnswerClicked" />
@@ -160,7 +162,16 @@ const endQuiz = async () => {
 	max-width: 800px;
 	margin: 0 auto;
 	text-align: center;
-	margin-top: -7%;
+}
+
+.BoxInfo {
+	position: relative;
+	width: 250px;
+	border-radius: 15px;
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+	margin-right: 2%;
+	float: right;
+	text-align: center;
 }
 
 .question-wrapper {
@@ -185,13 +196,22 @@ const endQuiz = async () => {
 	background-color: #3a9d70;
 }
 
-.Question {
-	text-align: right;
+.Joueur {
+	text-align: center;
 	margin-right: 2%;
+	padding-top: 5%;
+}
+
+.Question {
+	text-align: center;
+	margin-right: 2%;
+	padding-top: 2%;
+	padding-bottom: 2%;
 }
 .Score{
-	text-align: right;
+	text-align: center;
 	margin-right: 2%;
+	padding-bottom: 5%;
 }
 .Thanks{
 	text-align: center;
