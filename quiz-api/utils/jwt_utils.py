@@ -59,9 +59,6 @@ def auth_midleware(request):
     # Cut Bearer from token
     token = token.split(" ")[1]
     
-    if token == "dev-freepass":
-        return True
-    
     try:
         decode_token(token)
     except JwtError as e:
