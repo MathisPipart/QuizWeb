@@ -1,10 +1,12 @@
 from flask import Blueprint, request, jsonify
+from flask_cors import cross_origin
 import database.quiz_db as quiz_db
 from utils.converters import questionToJSON, JSONToQuestion
 
 quiz_bp = Blueprint('quiz', __name__)
 
-@quiz_bp.route('/quiz-info', methods=['GET'])
+@quiz_bp.route('/quiz-info', methods=['GET', 'OPTIONS'])
+@cross_origin()
 def GetQuizInfo():
     return quiz_db.get_quiz_info(), 200
 

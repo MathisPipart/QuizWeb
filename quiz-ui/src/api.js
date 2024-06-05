@@ -45,6 +45,9 @@ const api = {
 		login(data) {
 			return axiosInstance.post('/login', data);
 		},
+		checkLogin() {
+			return axiosInstance.get('/login');
+		},
 		question: {
 			add(data) {
 				return axiosInstance.post('/questions', data); // Note the endpoint

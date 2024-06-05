@@ -27,11 +27,10 @@ def build_token():
             'iat': datetime.datetime.utcnow(),
             'sub': 'quiz-app-admin'
         }
-        return jwt.encode(
-            payload,
-            secret,
-            algorithm="HS256"
-        )
+        return {
+            "token": jwt.encode(payload, secret, algorithm="HS256"),
+            "expiration": expiration_in_seconds
+		}
     except Exception as e:
         return e
 
