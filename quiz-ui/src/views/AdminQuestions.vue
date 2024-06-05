@@ -144,24 +144,25 @@ export default {
 
 <style scoped>
 .questions-container {
-	display: flex;
-	flex-wrap: wrap;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	gap: 20px 20px;
+	/* Reduce vertical and horizontal gap between grid items */
 	overflow-y: auto;
 	padding: 20px;
 	box-sizing: border-box;
-	height: 100vh;
 }
 
 .question-card {
-	width: calc(33.333% - 40px);
 	background-color: #fff;
-	border-radius: 10px;
+	border-radius: 5px;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-	margin: 10px;
 	overflow: hidden;
 	transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 	display: flex;
 	flex-direction: column;
+	height: 300px;
+	/* Fixed height for the question cards */
 }
 
 .question-card:hover {
@@ -171,24 +172,34 @@ export default {
 
 .question-image img {
 	width: 100%;
-	height: 200px;
+	height: 150px;
+	/* Fixed height for the image */
 	object-fit: cover;
 }
 
 .question-content {
-	padding: 20px;
+	padding: 10px;
+	/* Reduce padding */
 	flex-grow: 1;
+	/* Make the content take up remaining space */
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	/* Space out the elements vertically */
 }
 
 .card-title {
-	font-size: 24px;
-	margin: 10px 0;
+	font-size: 20px;
+	/* Reduce font size */
+	margin: 5px 0;
+	/* Reduce margin */
 }
 
 .card-description {
 	font-size: 14px;
 	color: #555;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
+	/* Reduce margin */
 }
 
 .card-buttons {
@@ -199,7 +210,8 @@ export default {
 .card-button {
 	display: block;
 	width: calc(50% - 5px);
-	padding: 10px;
+	padding: 5px;
+	/* Reduce padding */
 	text-align: center;
 	background-color: #007bff;
 	color: white;
@@ -215,7 +227,8 @@ export default {
 .delete-button {
 	display: block;
 	width: calc(50% - 5px);
-	padding: 10px;
+	padding: 5px;
+	/* Reduce padding */
 	text-align: center;
 	background-color: #f94f4f;
 	color: white;
@@ -236,13 +249,12 @@ export default {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: calc(33.333% - 40px);
-	height: 200px;
+	height: 300px;
+	/* Same fixed height as the question cards */
 	background-color: #f2f2f2;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-	border-radius: 10px;
+	border-radius: 5px;
 	cursor: pointer;
-	margin: 10px;
 	transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 

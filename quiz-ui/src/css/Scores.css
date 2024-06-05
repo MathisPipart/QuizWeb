@@ -1,12 +1,12 @@
 /* src/styles/main.css */
-h1{
+h1 {
   padding-top: 3%;
   padding-bottom: 2%;
   text-align: center;
   font-size: 4em;
 }
 
-.h1Questions{
+.h1Questions {
   font-size: 1em;
   padding-top: 0%;
   padding-bottom: 0%;
@@ -30,68 +30,67 @@ h1{
   margin: 0 auto; /* Centre le scoreboard horizontalement */
   font-family: Arial, sans-serif;
 }
-  .scoreboard div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 15px 20px;
-    margin: 10px 0;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s;
-  }
-  .scoreboard div:hover {
-    transform: scale(1.05);
-  }
-  .scoreboard .first {
-    background: linear-gradient(45deg, #ffd700, #ffc700);
-    font-weight: bold;
-    color: #fff;
-  }
-  .scoreboard .second {
-    background: linear-gradient(45deg, #c0c0c0, #b0b0b0);
-    font-weight: bold;
-    color: #fff;
-  }
-  .scoreboard .third {
-    background: linear-gradient(45deg, #cd7f32, #c67a30);
-    font-weight: bold;
-    color: #fff;
-  }
-  .scoreboard .other {
-    background-color: #fff;
-  }
-  .position {
-    width: 40px;
-    text-align: center;
-    font-size: 1.2em;
-  }
-  .name {
-    flex-grow: 1;
-    text-align: left;
-    padding-left: 10px;
-    font-size: 1.1em;
-  }
-  .score {
-    width: 60px;
-    text-align: right;
-    font-size: 1.1em;
-  }
+.scoreboard div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 15px 20px;
+  margin: 10px 0;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+.scoreboard div:hover {
+  transform: scale(1.05);
+}
+.scoreboard .first {
+  background: linear-gradient(45deg, #ffd700, #ffc700);
+  font-weight: bold;
+  color: #fff;
+}
+.scoreboard .second {
+  background: linear-gradient(45deg, #c0c0c0, #b0b0b0);
+  font-weight: bold;
+  color: #fff;
+}
+.scoreboard .third {
+  background: linear-gradient(45deg, #cd7f32, #c67a30);
+  font-weight: bold;
+  color: #fff;
+}
+.scoreboard .other {
+  background-color: #fff;
+}
+.position {
+  width: 40px;
+  text-align: center;
+  font-size: 1.2em;
+}
+.name {
+  flex-grow: 1;
+  text-align: left;
+  padding-left: 10px;
+  font-size: 1.1em;
+}
+.score {
+  width: 60px;
+  text-align: right;
+  font-size: 1.1em;
+}
 
-  .home-button {
-    display: inline-block;
-    margin-top: 2rem;
-    padding: 0.5rem 1rem;
-    background-color: #41b883; /* Utilisez une couleur appropriée */
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    text-align: center;
-  }
-  .home-button:hover {
-    background-color: #3a9d70; /* Couleur plus foncée pour l'effet hover */
-  }
-  
+.home-button {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 0.5rem 1rem;
+  background-color: #41b883; /* Utilisez une couleur appropriée */
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+}
+.home-button:hover {
+  background-color: #3a9d70; /* Couleur plus foncée pour l'effet hover */
+}
