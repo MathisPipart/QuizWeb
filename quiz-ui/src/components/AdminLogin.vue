@@ -3,7 +3,7 @@
 		<form @submit.prevent="login">
 			<label for="password">Password:</label>
 			<input type="password" id="password" v-model="password" placeholder="Password" autocorrect="off"
-				autocapitalize="none" required />
+				autocapitalize="none" required ref="passwordInput" />
 
 			<div class="submit-errors" v-if="error">
 				<div>{{ errorMessageFromCode }}</div>
@@ -35,7 +35,7 @@ export default {
 	mounted() {
 		this.password = '';
 		this.error = false;
-		this.$el.focus();
+		this.$refs.passwordInput.focus();
 	},
 	computed: {
 		errorMessageFromCode() {
@@ -88,7 +88,7 @@ export default {
 	max-width: 400px;
 	text-align: center;
 	position: relative;
-	border-radius: 10px;
+	border-radius: 5px;
 	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 

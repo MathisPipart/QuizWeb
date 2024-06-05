@@ -60,6 +60,21 @@ def RebuildDB():
 		
 	return "Ok", 200
 
+@admin_bp.route('/init-db', methods=['POST', 'OPTIONS'])
+@cross_origin()
+def InitDB():
+	if request.method == 'OPTIONS':
+		return _build_cors_preflight_response()
+		
+	try:
+		ju.auth_midleware(request)
+	except ju.JwtError as e:
+		return {"message": str(e)}, 401
+		
+	admin_db.init_db()
+		
+	return "Ok", 200
+
 @admin_bp.route('/questions', methods=['POST', 'OPTIONS'])
 @cross_origin()
 def PostQuestion():
