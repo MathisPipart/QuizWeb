@@ -124,8 +124,8 @@ const endQuiz = async () => {
 		</div>
 	</div>
 	<div v-else>
-		<h1>Quiz Finished!</h1>
-		<p class="Thanks">Thank you for participating in the quiz, {{ playerName }}. Your score is: {{ score }} / {{
+		<h1>Quiz terminé !</h1>
+		<p class="Thanks">Merci d'avoir participé à ce quiz, {{ playerName }}.<br> Votre score est de : {{ score }} / {{
 			totalNumberOfQuestion }}</p>
         <div class="Boite">
             <h2>Meilleurs scores des autres joueurs</h2>
