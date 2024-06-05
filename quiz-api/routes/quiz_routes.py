@@ -31,14 +31,20 @@ def GetQuestionByPosition():
 @quiz_bp.route('/participations', methods=['POST', 'OPTIONS'])
 @cross_origin()
 def PostParticipation():
-	if request.method == 'OPTIONS':
-		return _build_cors_preflight_response()
-		
-	payload = request.get_json()
-	playerName = payload['playerName']
-	answers = payload['answers']
-		
-	return quiz_db.insert_participation(playerName, answers), 200
+    if request.method == 'OPTIONS':
+        return _build_cors_preflight_response()
+        
+    payload = request.get_json()
+    playerName = payload['playerName']
+    answers = payload['answers']
+        
+    result = quiz_db.insert_participation(playerName, answers)
+    
+    # If the insertion returns an error message with a status code, handle it accordingly
+    if isinstance(result, tuple) and len(result) == 2 and isinstance(result[1], int):
+        return jsonify(result[0]), result[1]
+    
+    return jsonify(result), 200
 
 def _build_cors_preflight_response():
     response = Response()

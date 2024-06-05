@@ -4,7 +4,6 @@
 			{{ isLeaderboardHidden ? "Show Leaderboard" : "Hide Leaderboard" }}
 		</button>
 		<div :class="['leaderboard-module', { hidden: isLeaderboardHidden }]">
-			<button class="close-button" @click="toggleLeaderboard">×</button>
 			<h2>Leaderboard</h2>
 			<div class="scoreboard">
 				<div v-for="(score, index) in scores" :key="score.playerName" :class="{
@@ -106,7 +105,7 @@ export default {
 
 .show-leaderboard-button {
 	position: fixed;
-	top: 10px;
+	bottom: 10px;
 	right: 10px;
 	background-color: #007bff;
 	color: white;
@@ -114,6 +113,7 @@ export default {
 	padding: 10px;
 	cursor: pointer;
 	z-index: 1;
+	border-radius: 5px;
 }
 
 .show-leaderboard-button:hover {
@@ -134,7 +134,8 @@ export default {
 .scoreboard {
 	flex-grow: 1;
 	overflow-y: auto;
-	margin-bottom: 20px;
+	padding: 0;
+	margin: 0 0;
 }
 
 .leaderboard-item {
@@ -150,6 +151,9 @@ export default {
 	border-radius: 5px;
 	cursor: pointer;
 	align-self: flex-end;
+	position: fixed;
+	bottom: 10px;
+	left: 10px;
 }
 
 .reset-button:hover {

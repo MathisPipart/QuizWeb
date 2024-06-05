@@ -65,8 +65,14 @@ export default {
 	box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 	height: 100vh;
 	z-index: 1;
-	background-color: white;
+	background-color: #f7f7f7;
+	position: -webkit-sticky;
+	/* For Safari */
+	position: sticky;
+	top: 0;
+	/* Position the sidebar at the top when scrolling */
 }
+
 
 .logo {
 	margin-bottom: 2rem;

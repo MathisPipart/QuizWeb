@@ -66,6 +66,14 @@ const api = {
 			deleteAll() {
 				return axiosInstance.delete('/participations/all');
 			}
+		},
+		database: {
+			reset() {
+				return axiosInstance.post('/rebuild-db');
+			},
+			init() {
+				return axiosInstance.post('/init-db');
+			}
 		}
 	}
 };
