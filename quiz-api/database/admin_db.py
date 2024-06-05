@@ -22,48 +22,8 @@ def rebuild_db():
 def init_db():
 	rebuild_db()
 
-	# Sample questions
-	questions = [
-		Question(
-			title="What is the capital of France?",
-			text="",
-			image="",
-			position=1,
-			possibleAnswers=[
-				Answer(text="Paris", isCorrect=True),
-				Answer(text="London", isCorrect=False),
-				Answer(text="Berlin", isCorrect=False),
-				Answer(text="Madrid", isCorrect=False)
-			]
-		),
-		Question(
-			title="What is the capital of Germany?",
-			text="",
-			image="",
-			position=2,
-			possibleAnswers=[
-				Answer(text="Paris", isCorrect=False),
-				Answer(text="London", isCorrect=False),
-				Answer(text="Berlin", isCorrect=True),
-				Answer(text="Madrid", isCorrect=False)
-			]
-		),
-		Question(
-			title="What is the capital of Spain?",
-			text="",
-			image="",
-			position=3,
-			possibleAnswers=[
-				Answer(text="Paris", isCorrect=False),
-				Answer(text="London", isCorrect=False),
-				Answer(text="Berlin", isCorrect=False),
-				Answer(text="Madrid", isCorrect=True)
-			]
-		)
-	]
- 
 	# Insert questions
-	for question in questions:
+	for question in Config.DEFAULT_QUESTIONS:
 		insert_question(question)
   
 	# Sample participations
