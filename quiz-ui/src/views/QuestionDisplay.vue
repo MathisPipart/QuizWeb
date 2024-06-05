@@ -7,10 +7,10 @@
         class="question-option"
         v-for="(option, index) in currentQuestion.options"
         :key="index"
-        @click="handleOptionClick(option)"
+        @click="handleOptionClick(index)"
         :class="{
-          correct: selectedOption === option && option === currentQuestion.correctAnswer,
-          incorrect: selectedOption === option && option !== currentQuestion.correctAnswer
+          correct: selectedOption === index && option === currentQuestion.correctAnswer,
+          incorrect: selectedOption === index && option !== currentQuestion.correctAnswer
         }"
       >
         {{ option }}
@@ -33,10 +33,10 @@ export default {
     };
   },
   methods: {
-    handleOptionClick(option) {
-      if (!this.selectedOption) {
-        this.selectedOption = option;
-        this.$emit('click-on-answer', option);
+    handleOptionClick(index) {
+      if (this.selectedOption === null) {
+        this.selectedOption = index;
+        this.$emit('click-on-answer', index);
       }
     }
   },
@@ -57,9 +57,9 @@ export default {
 
 .options-container {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* 2 colonnes */
+  grid-template-columns: 1fr 1fr;
   gap: 0.5rem;
-  max-width: 100%; /* Pour s'ajuster à la largeur de l'image */
+  max-width: 100%;
 }
 
 .question-option {
@@ -72,14 +72,14 @@ export default {
 }
 
 .question-option:hover {
-  background-color: rgba(46, 98, 175, 0.56); /* Moins visible que #2e62af */
+  background-color: rgba(46, 98, 175, 0.56);
 }
 
 .question-option.correct {
-  background-color: #28a745; /* Vert pour les réponses correctes */
+  background-color: #28a745;
 }
 
 .question-option.incorrect {
-  background-color: #dc3545; /* Rouge pour les réponses incorrectes */
+  background-color: #dc3545;
 }
 </style>

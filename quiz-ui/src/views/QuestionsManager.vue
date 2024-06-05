@@ -13,28 +13,24 @@ const quizFinished = ref(false);
 const score = ref(0);
 
 const registeredScores = ref([]);
-
 const questions = ref([]);
 const nbQuestions = ref(0);
+const selectedAnswersIndex = ref([]);
 
 onMounted(async () => {
 	try {
 		const response = await api.quiz.get();
 		nbQuestions.value = response.data.size;
-		console.log("Nb Questions : ", nbQuestions.value);
 	} catch (error) {
 		console.error("Error fetching quiz data: ", error);
 	}
 
-	totalNumberOfQuestion.value = nbQuestions;
+	totalNumberOfQuestion.value = nbQuestions.value;
 	await fetchQuestions();
 
 	loadQuestionByPosition(currentQuestionPosition.value);
 	registeredScores.value = await fetchRegisteredScores();
 	registeredScores.value = getTop5Scores(registeredScores.value);
-	console.log("Questions Manager mounted");
-
-
 });
 
 const fetchQuestions = async () => {
@@ -73,11 +69,14 @@ const loadQuestionByPosition = (position) => {
 	}
 };
 
-const handleAnswerClicked = (selectedAnswer) => {
-	console.log("Answer clicked:", selectedAnswer);
+const handleAnswerClicked = (selectedAnswerIndex) => {
+	const selectedAnswer = currentQuestion.value.options[selectedAnswerIndex];
 	if (selectedAnswer === currentQuestion.value.correctAnswer) {
 		score.value++;
 	}
+
+	// Enregistre l'index de la réponse sélectionnée, en ajoutant 1 pour commencer à 1
+	selectedAnswersIndex.value.push(selectedAnswerIndex + 1);
 
 	if (currentQuestionPosition.value < questions.value.length - 1) {
 		setTimeout(() => {
@@ -91,14 +90,18 @@ const handleAnswerClicked = (selectedAnswer) => {
 	}
 };
 
-const endQuiz = () => {
+const endQuiz = async () => {
 	quizFinished.value = true;
 	participationStorageService.saveParticipationScore(score.value);
-	api.quiz.participation.add({
+	await api.quiz.participation.add({
 		playerName: playerName.value,
-		answers: [1, 3, 4]
+		score: score.value,
+		answers: selectedAnswersIndex.value
 	});
-	console.log("Quiz finished! Your score is:", score.value);
+
+	// Recharger les scores après avoir ajouté la participation
+	registeredScores.value = await fetchRegisteredScores();
+	registeredScores.value = getTop5Scores(registeredScores.value);
 };
 
 </script>
@@ -118,29 +121,29 @@ const endQuiz = () => {
 		<h1>Quiz Finished!</h1>
 		<p>Thank you for participating in the quiz, {{ playerName }}. Your score is: {{ score }} / {{
 			totalNumberOfQuestion }}</p>
-		<h2>Meilleurs scores des autres joueurs</h2>
-		<div class="scoreboard">
-			<div v-for="(playerScore, index) in registeredScores" :key="playerScore.playerName" :class="{
-				first: index === 0,
-				second: index === 1,
-				third: index === 2,
-				fourth: index === 3,
-				fifth: index === 4,
-				other: index >= 5,
-			}">
-				<span class="position">{{ index + 1 }}</span>
-				<span class="name">{{ playerScore.playerName }}</span>
-				<span class="score">{{ playerScore.score }}</span>
-			</div>
-		</div>
-		<!-- Bouton pour revenir à la page Home -->
-		<RouterLink to="/" class="home-button">
-			Revenir à la page Home
-		</RouterLink>
+        <div class="Boite">
+            <h2>Meilleurs scores des autres joueurs</h2>
+            <div class="scoreboard">
+                <div v-for="(playerScore, index) in registeredScores" :key="playerScore.playerName" :class="{
+                    first: index === 0,
+                    second: index === 1,
+                    third: index === 2,
+                    fourth: index === 3,
+                    fifth: index === 4,
+                    other: index >= 5,
+                }">
+                    <span class="position">{{ index + 1 }}</span>
+                    <span class="name">{{ playerScore.playerName }}</span>
+                    <span class="score">{{ playerScore.score }}</span>
+                </div>
+            </div>
+            <!-- Bouton pour revenir à la page Home -->
+            <RouterLink to="/" class="home-button">
+                Revenir à la page Home
+            </RouterLink>
+        </div>
 	</div>
 </template>
-
-
 
 
 <style scoped>

@@ -10,7 +10,6 @@ onMounted(async () => {
 
 	// Sort scores in descending order
 	allScores.sort((a, b) => b.score - a.score);
-
 	// Take the top 5 scores
 	scores.value = allScores.slice(0, 5);
 });

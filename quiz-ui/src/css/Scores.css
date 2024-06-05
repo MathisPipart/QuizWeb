@@ -5,9 +5,15 @@ h1{
   text-align: center;
   font-size: 4em;
 }
+
+.h1Questions{
+  font-size: 1em;
+  padding-top: 0%;
+  padding-bottom: 0%;
+  text-align: left;
+}
 .Boite {
   position: relative; /* Pour assurer qu'il soit au premier plan */
-  z-index: 10; /* Ajuste ce nombre pour s'assurer qu'il est au-dessus des autres éléments */
   background-color: white; /* Couleur de fond du rectangle */
   border-radius: 15px; /* Coins arrondis */
   padding: 20px; /* Espace intérieur */
