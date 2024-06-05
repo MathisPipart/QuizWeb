@@ -1,5 +1,7 @@
 <template>
 
+	<link rel="stylesheet" href="https://use.typekit.net/ocu3dtf.css">
+
 	<div class="app">
 
 		<sidebar-nav />
@@ -42,6 +44,12 @@ export default {
 </script>
 
 <style scoped>
+body {
+	font-family: "gamay", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+}
+
 .app {
 	display: flex;
 	min-height: 100vh;

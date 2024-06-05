@@ -10,7 +10,7 @@
 			<router-link to="/" class="to-top user">Home</router-link>
 			<div class="spacer"></div>
 			<a @click="signOut" v-if="store.token" class="to-bottom user">Sign Out</a>
-			<a @click="openLogin" class="to-bottom admin">Admin</a>
+			<a @click="openLogin" class="to-bottom admin" :class="{ selected: isInAdmin }">Admin</a>
 		</nav>
 
 		<AdminLogin v-if="isLogin" @close="closeLogin" class="modal" />
@@ -35,6 +35,11 @@ export default {
 	},
 	components: {
 		AdminLogin,
+	},
+	computed: {
+		isInAdmin() {
+			return this.$route.path.startsWith('/admin');
+		},
 	},
 	methods: {
 		openLogin() {
@@ -95,6 +100,10 @@ nav a {
 }
 
 nav .router-link-exact-active {
+	font-weight: bold;
+}
+
+nav .selected {
 	font-weight: bold;
 }
 
