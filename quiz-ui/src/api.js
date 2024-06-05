@@ -37,7 +37,7 @@ const api = {
 		},
 		participation: {
 			add(data) {
-				return axiosInstance.post('/participation', data);
+				return axiosInstance.post('/participations', data);
 			}
 		}
 	},
