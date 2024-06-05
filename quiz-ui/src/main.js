@@ -6,8 +6,8 @@ import { createPinia } from "pinia";
 import "./css/Scores.css";
 import "./assets/main.css";
 
-// import "@fortawesome/fontawesome-free/css/all.css";
-// import "@fortawesome/fontawesome-free/js/all.js";
+import "@fortawesome/fontawesome-free/css/all.css";
+import "@fortawesome/fontawesome-free/js/all.js";
 
 import SidebarNavVue from "./components/SidebarNav.vue";
 

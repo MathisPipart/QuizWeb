@@ -5,7 +5,7 @@ from utils.converters import questionToJSON, JSONToQuestion
 
 quiz_bp = Blueprint('quiz', __name__)
 
-@quiz_bp.route('/quiz-info', methods=['GET', 'OPTIONS'])
+@quiz_bp.route('/quiz-info', methods=['GET'])
 def GetQuizInfo():
 	return quiz_db.get_quiz_info(), 200
 
