@@ -46,14 +46,14 @@
 
 <script>
 	import DeleteModal from "@/components/DeleteModal.vue";
-	import QuestionModal from "@/components/QuestionModal.vue"; // Import the QuestionModal component
+	import QuestionModal from "@/components/QuestionModal.vue";
 	import api from "@/api";
 
 	export default {
 		name: "AdminQuestions",
 		components: {
 			DeleteModal,
-			QuestionModal, // Register the QuestionModal component
+			QuestionModal,
 		},
 		data() {
 			return {
@@ -70,14 +70,14 @@
 			this.questionCount = (await api.quiz.get()).data.size;
 			for (let i = 1; i <= this.questionCount; i++) {
 				const question = (await api.quiz.question.getByPosition(i)).data;
-				question.status = "current"; // Initialize with status 'current'
+				question.status = "current";
 				this.questions.push(question);
 			}
 		},
 		methods: {
 			addQuestion() {
-				this.questions.push({
-					id: this.questions.length + 1,
+				this.currentQuestion = {
+					id: null,
 					image: "",
 					title: "",
 					text: "",
@@ -86,12 +86,9 @@
 						{ id: 1, text: "", isCorrect: false },
 						{ id: 2, text: "", isCorrect: false },
 					],
-					status: "new", // Mark as new
-				});
-				this.$nextTick(() => {
-					const container = this.$refs.questionsContainer;
-					container.scrollLeft = container.scrollWidth;
-				});
+					status: "new",
+				};
+				this.showEditModal = true;
 			},
 			editQuestion(qIndex) {
 				this.currentQuestion = { ...this.questions[qIndex] };
@@ -99,14 +96,14 @@
 				this.showEditModal = true;
 			},
 			updateQuestion(updatedQuestion) {
-				this.questions[this.currentQuestionIndex] = updatedQuestion;
-				this.showEditModal = false;
-
 				if (updatedQuestion.status === "new") {
+					this.questions.push(updatedQuestion);
 					this.addQuestionToServer(updatedQuestion);
 				} else {
+					this.questions[this.currentQuestionIndex] = updatedQuestion;
 					this.updateQuestionOnServer(updatedQuestion);
 				}
+				this.showEditModal = false;
 			},
 			async addQuestionToServer(question) {
 				try {
