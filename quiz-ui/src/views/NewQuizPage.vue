@@ -50,7 +50,6 @@ export default {
   justify-content: center;
   max-width: 800px;
   max-height: 250px;
-  border: 1px solid #ccc;
   padding: 20px;
   border-radius: 15px;
   padding: 20px;
