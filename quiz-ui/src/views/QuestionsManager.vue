@@ -17,9 +17,6 @@ const registeredScores = ref([]);
 const questions = ref([]);
 const nbQuestions = ref(0);
 
-
-
-
 onMounted(async () => {
     try {
         const response = await api.quiz.get();

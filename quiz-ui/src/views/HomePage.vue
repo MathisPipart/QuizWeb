@@ -17,25 +17,27 @@ onMounted(async () => {
 </script>
 
 <template>
-	<h1>Home page</h1>
+	<h1>QUIZ</h1>
 	<br />
-	<h2>Classement</h2>
-	<div class="scoreboard">
-		<div v-for="(scoreEntry, index) in scores" :key="scoreEntry.playerName" :class="{
-			first: index === 0,
-			second: index === 1,
-			third: index === 2,
-			fourth: index === 3,
-			fifth: index === 4,
-			other: index >= 5,
-		}">
-			<span class="position">{{ index + 1 }}</span>
-			<span class="name">{{ scoreEntry.playerName }}</span>
-			<span class="score">{{ scoreEntry.score }}</span>
+	<div class="Boite">
+		<h2>Classement</h2>
+		<div class="scoreboard">
+			<div v-for="(scoreEntry, index) in scores" :key="scoreEntry.playerName" :class="{
+				first: index === 0,
+				second: index === 1,
+				third: index === 2,
+				fourth: index === 3,
+				fifth: index === 4,
+				other: index >= 5,
+			}">
+				<span class="position">{{ index + 1 }}</span>
+				<span class="name">{{ scoreEntry.playerName }}</span>
+				<span class="score">{{ scoreEntry.score }}</span>
+			</div>
 		</div>
+		<br/>
+		<router-link to="/new-quiz" class="start-quiz-link">Démarrer le quiz !</router-link>
 	</div>
-	<br />
-	<router-link to="/new-quiz" class="start-quiz-link">Démarrer le quiz !</router-link>
 </template>
 
 <style scoped>

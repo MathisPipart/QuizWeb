@@ -1,11 +1,29 @@
 /* src/styles/main.css */
+h1{
+  padding-top: 3%;
+  padding-bottom: 2%;
+  text-align: center;
+  font-size: 4em;
+}
+.Boite {
+  position: relative; /* Pour assurer qu'il soit au premier plan */
+  z-index: 10; /* Ajuste ce nombre pour s'assurer qu'il est au-dessus des autres éléments */
+  background-color: white; /* Couleur de fond du rectangle */
+  border-radius: 15px; /* Coins arrondis */
+  padding: 20px; /* Espace intérieur */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Légère ombre pour donner de la profondeur */
+  max-width: 800px; /* Largeur maximale de la boîte */
+  margin: 0 auto; /* Centre la boîte horizontalement */
+  text-align: center; /* Centre le texte à l'intérieur */
+}
 .scoreboard {
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    max-width: 400px;
-    font-family: Arial, sans-serif;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centre le contenu horizontalement */
+  max-width: 600px;
+  margin: 0 auto; /* Centre le scoreboard horizontalement */
+  font-family: Arial, sans-serif;
+}
   .scoreboard div {
     display: flex;
     justify-content: space-between;
