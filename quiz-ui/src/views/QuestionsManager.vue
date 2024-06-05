@@ -15,23 +15,35 @@ const score = ref(0);
 const registeredScores = ref([]);
 
 const questions = ref([]);
+const nbQuestions = ref(0);
+
+
+
 
 onMounted(async () => {
+    try {
+        const response = await api.quiz.get();
+        nbQuestions.value = response.data.size;
+        console.log("Nb Questions : ", nbQuestions.value);
+    } catch (error) {
+        console.error("Error fetching quiz data: ", error);
+    }
+
+    totalNumberOfQuestion.value = nbQuestions;
     await fetchQuestions();
-    totalNumberOfQuestion.value = questions.value.length;
+    
     loadQuestionByPosition(currentQuestionPosition.value);
     registeredScores.value = await fetchRegisteredScores();
     registeredScores.value = getTop5Scores(registeredScores.value);
     console.log("Questions Manager mounted");
+
+
 });
 
 const fetchQuestions = async () => {
-    let position = 1;
-    let hasMoreQuestions = true;
-
-    while (hasMoreQuestions) {
+    for (let i = 1; i <= nbQuestions.value; i++) {
         try {
-            const response = await api.quiz.question.getByPosition(position);
+            const response = await api.quiz.question.getByPosition(i);
             const rawQuestion = response.data;
 
             const formattedQuestion = {
@@ -43,9 +55,8 @@ const fetchQuestions = async () => {
             };
 
             questions.value.push(formattedQuestion);
-            position++;
         } catch (error) {
-            hasMoreQuestions = false;
+            console.error("Error fetching question data: ", error);
         }
     }
 };
@@ -86,6 +97,10 @@ const handleAnswerClicked = (selectedAnswer) => {
 const endQuiz = () => {
     quizFinished.value = true;
     participationStorageService.saveParticipationScore(score.value);
+    api.quiz.participation.add({
+        playerName: playerName.value,
+        score: [1,3,4]
+    });
     console.log("Quiz finished! Your score is:", score.value);
 };
 
