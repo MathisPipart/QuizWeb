@@ -111,10 +111,12 @@ const endQuiz = async () => {
 	<div v-if="!quizFinished">
 		<h1>Bienvenue, {{ playerName }}</h1>
 		<br>
-		<h2>Question {{ currentQuestionPosition + 1 }} / {{ totalNumberOfQuestion }}</h2>
-		<h2>Score : {{ score }}</h2>
-		<div class="question-wrapper">
-			<QuestionDisplay :currentQuestion="currentQuestion" @click-on-answer="handleAnswerClicked" />
+		<h4 class="Question">Question {{ currentQuestionPosition + 1 }} / {{ totalNumberOfQuestion }}</h4>
+		<h4 class="Score">Score : {{ score }}</h4>
+		<div class="BoxQuestion">
+			<div class="question-wrapper">
+				<QuestionDisplay :currentQuestion="currentQuestion" @click-on-answer="handleAnswerClicked" />
+			</div>
 		</div>
 	</div>
 	<div v-else>
@@ -147,6 +149,18 @@ const endQuiz = async () => {
 
 
 <style scoped>
+.BoxQuestion{
+	position: relative;
+	background-color: white;
+	border-radius: 15px;
+	padding: 20px;
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+	max-width: 800px;
+	margin: 0 auto;
+	text-align: center;
+	margin-top: -2%;
+}
+
 .question-wrapper {
 	width: 100%;
 	max-width: 800px;
@@ -167,6 +181,15 @@ const endQuiz = async () => {
 
 .home-button:hover {
 	background-color: #3a9d70;
+}
+
+.Question {
+	text-align: right;
+	margin-right: 2%;
+}
+.Score{
+	text-align: right;
+	margin-right: 2%;
 }
 </style>
 <style src="../css/Scores.css"></style>
