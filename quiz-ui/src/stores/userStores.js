@@ -27,17 +27,23 @@ export const useUserStore = defineStore('userStore', {
 		async logout() {
 			this.token = null;
 			localStorage.removeItem('userToken');
-			router.push('/');
+			if (router.currentRoute.value.path === '/admin') {
+				router.push('/');
+			}
 		},
 		async fetchUser() {
 			if (!this.token) {
-				router.push('/');
+				if (router.currentRoute.value.path === '/admin') {
+					router.push('/');
+				}
 			}
 
 			if (new Date().getTime() - this.requestTime > this.expiration * 1000) {
 				this.token = null;
 				localStorage.removeItem('userToken');
-				router.push('/');
+				if (router.currentRoute.value.path === '/admin') {
+					router.push('/');
+				}
 			}
 		},
 	},

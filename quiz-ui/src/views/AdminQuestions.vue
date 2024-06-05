@@ -18,7 +18,7 @@
 					<p class="card-description">{{ question.text }}</p>
 					<div class="card-buttons">
 						<button class="card-button" @click="editQuestion(qIndex)">
-							Read More
+							Edit
 						</button>
 						<button class="delete-button" @click="confirmDelete(qIndex)">
 							<i class="fas fa-trash-alt"></i>
@@ -39,7 +39,7 @@
 			v-if="showEditModal"
 			:question="currentQuestion"
 			@close="closeEditModal"
-			@save="updateQuestion"
+			@save="saveQuestion"
 		/>
 	</div>
 </template>
@@ -67,14 +67,18 @@
 			};
 		},
 		async mounted() {
-			this.questionCount = (await api.quiz.get()).data.size;
-			for (let i = 1; i <= this.questionCount; i++) {
-				const question = (await api.quiz.question.getByPosition(i)).data;
-				question.status = "current";
-				this.questions.push(question);
-			}
+			await this.fetchQuestions();
 		},
 		methods: {
+			async fetchQuestions() {
+				this.questions = [];
+				this.questionCount = (await api.quiz.get()).data.size;
+				for (let i = 1; i <= this.questionCount; i++) {
+					const question = (await api.quiz.question.getByPosition(i)).data;
+					question.status = "current"; // Initialize with status 'current'
+					this.questions.push(question);
+				}
+			},
 			addQuestion() {
 				this.currentQuestion = {
 					id: null,
@@ -83,7 +87,7 @@
 					text: "",
 					position: this.questions.length + 1,
 					possibleAnswers: [
-						{ id: 1, text: "", isCorrect: false },
+						{ id: 1, text: "", isCorrect: true },
 						{ id: 2, text: "", isCorrect: false },
 					],
 					status: "new",
@@ -95,19 +99,20 @@
 				this.currentQuestionIndex = qIndex;
 				this.showEditModal = true;
 			},
-			updateQuestion(updatedQuestion) {
+			async saveQuestion(updatedQuestion) {
 				if (updatedQuestion.status === "new") {
 					this.questions.push(updatedQuestion);
-					this.addQuestionToServer(updatedQuestion);
+					await this.addQuestionToServer(updatedQuestion);
 				} else {
-					this.questions[this.currentQuestionIndex] = updatedQuestion;
-					this.updateQuestionOnServer(updatedQuestion);
+					this.questions.splice(this.currentQuestionIndex, 1, updatedQuestion);
+					await this.updateQuestionOnServer(updatedQuestion);
 				}
 				this.showEditModal = false;
 			},
 			async addQuestionToServer(question) {
 				try {
-					await api.admin.question.add(question);
+					const response = await api.admin.question.add(question);
+					question.id = response.data.id; // Assume the response contains the new question ID
 					question.status = "current";
 				} catch (error) {
 					console.error("Failed to add question", error);
@@ -134,7 +139,12 @@
 				if (qIndex !== null) {
 					const question = this.questions[qIndex];
 					if (question.status !== "new") {
-						await api.admin.question.delete(question.id);
+						try {
+							await api.admin.question.delete(question.id);
+						} catch (error) {
+							console.error("Failed to delete question", error);
+							return;
+						}
 					}
 					this.questions.splice(qIndex, 1);
 					this.closeDeleteModal();
