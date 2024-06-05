@@ -29,6 +29,14 @@ export default {
 			store,
 		};
 	},
+	methods: {
+		async periodicFetchUser() {
+			await this.store.fetchUser();
+		}
+	},
+	mounted() {
+		setInterval(this.periodicFetchUser, 1000 * 60);
+	}
 };
 
 </script>
