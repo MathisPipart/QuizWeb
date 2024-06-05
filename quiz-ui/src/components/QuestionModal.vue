@@ -1,9 +1,6 @@
 <template>
-	<div class="modal-overlay" @click.self="closeModal">
+	<div class="modal-overlay" @click.self="closeModal" @keydown.esc="closeModal" tabindex="0">
 		<div class="modal-content">
-			<span class="close-button" @click="closeModal">
-				<i class="fas fa-times"></i>
-			</span>
 			<div class="form-group">
 				<label class="form-label">Title:</label>
 				<input type="text" v-model="editableQuestion.title" class="form-input"
@@ -66,6 +63,7 @@ export default {
 	mounted() {
 		const defaultImage = "/src/assets/default-image.png";
 		this.editableQuestion.image = this.editableQuestion.image || defaultImage;
+		this.$el.focus();
 	},
 	setup() {
 		return { v$: useVuelidate() };
@@ -151,7 +149,7 @@ export default {
 .modal-content {
 	background-color: #fff;
 	padding: 20px;
-	border-radius: 10px;
+	border-radius: 5px;
 	width: 90%;
 	max-width: 800px;
 	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
