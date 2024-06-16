@@ -3,7 +3,6 @@ import { useUserStore } from "@/stores/userStores";
 
 import HomePage from '@/views/HomePage.vue'
 import AdminPage from '@/views/AdminPage.vue'
-import NewQuizPage from '@/views/NewQuizPage.vue'
 import QuestionsPage from '@/views/QuestionsPage.vue'
 
 const router = createRouter({
@@ -19,11 +18,6 @@ const router = createRouter({
 			name: 'admin',
 			component: AdminPage,
 			meta: { requiresAuth: true }
-		},
-		{
-			path: '/new-quiz',
-			name: 'new-quiz',
-			component: NewQuizPage,
 		},
 		{
 			path: '/questions',

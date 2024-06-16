@@ -1,21 +1,22 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import api from '@/api';
 import participationStorageService from '@/services/ParticipationStorageService';
 import QuestionDisplay from '../views/QuestionDisplay.vue';
 
 const playerName = ref(participationStorageService.getPlayerName() || 'Player');
-
 const currentQuestion = ref({});
 const currentQuestionPosition = ref(0);
 const totalNumberOfQuestion = ref(0);
 const quizFinished = ref(false);
 const score = ref(0);
-
 const registeredScores = ref([]);
 const questions = ref([]);
 const nbQuestions = ref(0);
 const selectedAnswersIndex = ref([]);
+
+const router = useRouter();
 
 onMounted(async () => {
 	try {
@@ -102,10 +103,13 @@ const endQuiz = async () => {
 	// Recharger les scores après avoir ajouté la participation
 	registeredScores.value = await fetchRegisteredScores();
 	registeredScores.value = getTop5Scores(registeredScores.value);
+
+	// Redirect to homepage with query parameter
+	await router.push({ path: '/', query: { showResults: true, score: score.value, player: playerName.value } });
+
+	// Show modal (will be handled on the homepage)
 };
-
 </script>
-
 
 <template>
 	<div v-if="!quizFinished">
@@ -122,34 +126,7 @@ const endQuiz = async () => {
 			</div>
 		</div>
 	</div>
-	<div v-else>
-		<h1>Quiz terminé !</h1>
-		<p class="Thanks">Merci d'avoir participé à ce quiz, {{ playerName }}.<br> Votre score est de : {{ score }} / {{
-			totalNumberOfQuestion }}</p>
-		<div class="Boite">
-			<h2>Meilleurs scores des autres joueurs</h2>
-			<div class="scoreboard">
-				<div v-for="(playerScore, index) in registeredScores" :key="playerScore.playerName" :class="{
-					first: index === 0,
-					second: index === 1,
-					third: index === 2,
-					fourth: index === 3,
-					fifth: index === 4,
-					other: index >= 5,
-				}">
-					<span class="position">{{ index + 1 }}</span>
-					<span class="name">{{ playerScore.playerName }}</span>
-					<span class="score">{{ playerScore.score }}</span>
-				</div>
-			</div>
-			<!-- Bouton pour revenir à la page Home -->
-			<RouterLink to="/" class="home-button">
-				Revenir à la page Home
-			</RouterLink>
-		</div>
-	</div>
 </template>
-
 
 <style scoped>
 .BoxQuestion {
@@ -180,22 +157,6 @@ const endQuiz = async () => {
 	margin-top: 2rem;
 }
 
-.home-button {
-	display: inline-block;
-	margin-top: 2rem;
-	padding: 0.5rem 1rem;
-	background-color: var(--vt-c-primary);
-	color: var(--vt-c-accent-text);
-	text-decoration: none;
-	border-radius: 5px;
-	font-weight: bold;
-	text-align: center;
-}
-
-.home-button:hover {
-	background-color: var(--vt-c-primary-light)
-}
-
 .Joueur {
 	text-align: center;
 	margin-right: 2%;
@@ -218,5 +179,46 @@ const endQuiz = async () => {
 .Thanks {
 	text-align: center;
 }
+
+.modal {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.7);
+	backdrop-filter: blur(5px);
+}
+
+.modal-content {
+	background-color: var(--color-background-soft);
+	padding: 20px;
+	width: 80%;
+	max-width: 500px;
+	text-align: center;
+	position: relative;
+	border-radius: 5px;
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.close-button {
+	margin-top: 20px;
+	padding: 10px 20px;
+	background-color: var(--vt-c-primary);
+	color: var(--vt-c-accent-text);
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-weight: bold;
+	text-align: center;
+}
+
+.close-button:hover {
+	background-color: var(--vt-c-primary-light);
+}
 </style>
-<style src="../css/scores.css"></style>
