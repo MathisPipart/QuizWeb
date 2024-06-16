@@ -53,11 +53,34 @@ export default {
 	align-items: center;
 	padding: 20px;
 	flex-shrink: 0;
-	/* Prevents it from shrinking */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+	.admin-title {
+		flex-direction: column;
+		align-items: flex-start;
+		/* Align items to the start of the column */
+	}
+
+	.admin-title h1 {
+		margin-bottom: 10px;
+		/* Add some space between the title and the database component */
+		width: 100%;
+		text-align: center;
+		/* Center the text in the column layout */
+	}
+
+	.admin-title .database-container {
+		width: 100%;
+		display: flex;
+		flex-grow: 1;
+	}
 }
 
 .admin-page {
 	display: flex;
+	flex-direction: column;
 	flex-grow: 1;
 	/* Takes remaining space available */
 	overflow: hidden;
