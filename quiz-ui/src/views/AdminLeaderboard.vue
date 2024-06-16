@@ -84,7 +84,7 @@ export default {
 	right: 0;
 	top: 0;
 	height: 100%;
-	width: 30%;
+	width: 400px;
 	display: flex;
 	flex-direction: column;
 	padding: 20px;
