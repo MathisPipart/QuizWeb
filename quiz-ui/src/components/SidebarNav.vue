@@ -70,7 +70,7 @@ export default {
 	box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 	height: 100vh;
 	z-index: 1;
-	background-color: white;
+	background-color: var(--color-background-soft);
 }
 
 .logo {
@@ -95,7 +95,7 @@ nav a {
 	display: block;
 	padding: 0.5rem 0;
 	text-decoration: none;
-	color: var(--color-text);
+	color: var(--vt-c-accent-text);
 	cursor: pointer;
 }
 
@@ -117,25 +117,25 @@ nav a.to-bottom {
 }
 
 .admin {
-	background-color: #f94f4f;
-	color: white;
+	background-color: var(--vt-c-important);
+	color: var(--vt-c-accent-text);
 	border-radius: 5px;
 }
 
 .admin:hover {
-	background-color: #f76a6a;
-	color: white;
+	background-color: var(--vt-c-important-light);
+	color: var(--vt-c-accent-text);
 }
 
 .user {
-	background-color: #77dd77;
-	color: white;
+	background-color: var(--vt-c-primary);
+	color: var(--vt-c-accent-text);
 	border-radius: 5px;
 }
 
 .user:hover {
-	background-color: #90ee90;
-	color: white;
+	background-color: var(--vt-c-primary-light);
+	color: var(--vt-c-accent-text);
 }
 
 .spacer {

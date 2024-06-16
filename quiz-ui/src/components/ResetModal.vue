@@ -1,7 +1,7 @@
 <template>
 	<div class="modal" @keydown.esc="closeModal" @click.self="closeModal" tabindex="0">
 		<div class="modal-content">
-			<h2>Are you sure you want to reset the leaderboard?</h2>
+			<h2>Are you sure?</h2>
 			<div class="button-group">
 				<button @click="closeModal" class="cancel-button">Cancel</button>
 				<button @click="confirmReset" class="reset-button">Yes</button>
@@ -44,9 +44,8 @@ export default {
 }
 
 .modal-content {
-	background-color: #fff;
+	background-color: var(--color-background-soft);
 	padding: 20px;
-	border: 1px solid #888;
 	width: 80%;
 	max-width: 400px;
 	text-align: center;
@@ -63,27 +62,27 @@ export default {
 
 button.cancel-button {
 	padding: 10px 20px;
-	background-color: #77dd77;
-	color: white;
+	background-color: var(--vt-c-primary);
+	color: var(--vt-c-accent-text);
 	border: none;
 	border-radius: 5px;
 	cursor: pointer;
 }
 
 button.cancel-button:hover {
-	background-color: #90ee90;
+	background-color: var(--vt-c-primary-light);
 }
 
 button.reset-button {
 	padding: 10px 20px;
-	background-color: #f94f4f;
-	color: white;
+	background-color: var(--vt-c-important);
+	color: var(--vt-c-accent-text);
 	border: none;
 	border-radius: 5px;
 	cursor: pointer;
 }
 
 button.reset-button:hover {
-	background-color: #f76a6a;
+	background-color: var(--vt-c-important-light);
 }
 </style>

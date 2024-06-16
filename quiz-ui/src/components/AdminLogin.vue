@@ -1,7 +1,7 @@
 <template>
 	<div class="modal" @keydown.esc="closeModal" @click.self="closeModal" tabindex="0">
 		<form @submit.prevent="login">
-			<label for="password">Password:</label>
+			<label for="password">Password</label>
 			<input type="password" id="password" v-model="password" placeholder="Password" autocorrect="off"
 				autocapitalize="none" required ref="passwordInput" />
 
@@ -81,9 +81,8 @@ export default {
 }
 
 .modal form {
-	background-color: #fff;
+	background-color: var(--color-background-soft);
 	padding: 20px;
-	border: 1px solid #888;
 	width: 80%;
 	max-width: 400px;
 	text-align: center;
@@ -102,15 +101,22 @@ export default {
 	width: calc(100% - 22px);
 	padding: 10px;
 	margin-bottom: 20px;
-	border: 1px solid #ccc;
 	border-radius: 5px;
+	background-color: var(--color-background-mute);
+	color: var(--color-text);
+	border: none;
+	text-align: center;
+}
+
+.modal form input[type="password"]:focus {
+	outline: none;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
 .modal form .button-group {
 	display: flex;
 	justify-content: center;
 	gap: 10px;
-	/* Add gap between buttons */
 }
 
 .modal form input[type="submit"],
@@ -122,33 +128,33 @@ export default {
 }
 
 .modal form input[type="submit"] {
-	background-color: #77DD77;
-	color: white;
+	background-color: var(--vt-c-primary);
+	color: var(--vt-c-accent-text);
 }
 
 .modal form input[type="submit"]:hover {
-	background-color: #90EE90;
+	background-color: var(--vt-c-primary-light);
 }
 
 .modal form input[type="submit"]:disabled {
-	background-color: #ccc;
+	background-color: var(--color-background-mute);
 }
 
 .modal form button.cancel-button {
-	background-color: #f94f4f;
-	color: white;
+	background-color: var(--vt-c-important);
+	color: var(--vt-c-accent-text);
 }
 
 .modal form button.cancel-button:hover {
-	background-color: #f76a6a;
+	background-color: var(--vt-c-important-light);
 }
 
 .modal .submit-errors {
-	color: red;
+	color: var(--vt-c-important);
 	margin-bottom: 20px;
 }
 
 .modal .has-error {
-	border-color: red;
+	border-color: var(--vt-c-important);
 }
 </style>

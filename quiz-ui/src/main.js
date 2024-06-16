@@ -3,8 +3,8 @@ import App from "./App.vue";
 import router from "./router";
 import { createPinia } from "pinia";
 
-import "./css/Scores.css";
-import "./assets/main.css";
+import "./css/scores.css";
+import "./css/main.css";
 
 import "@fortawesome/fontawesome-free/css/all.css";
 import "@fortawesome/fontawesome-free/js/all.js";

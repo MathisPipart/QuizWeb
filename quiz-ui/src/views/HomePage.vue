@@ -3,10 +3,12 @@ import { ref, onMounted } from 'vue';
 import api from '@/api';
 
 const scores = ref([]);
+const questionCount = ref(0);
 
 onMounted(async () => {
 	const response = await api.quiz.get();
 	const allScores = response.data.scores;
+	questionCount.value = response.data.size;
 
 	// Sort scores in descending order
 	allScores.sort((a, b) => b.score - a.score);
@@ -16,11 +18,11 @@ onMounted(async () => {
 </script>
 
 <template>
-	<h1>QUIZ</h1>
+	<h1>Quizzer</h1>
 	<br />
 	<div class="Boite">
-		<h2>Classement</h2>
-		<div class="scoreboard">
+		<h2>Leaderboard</h2>
+		<div class="scoreboard" v-if="scores.length > 0">
 			<div v-for="(scoreEntry, index) in scores" :key="scoreEntry.playerName" :class="{
 				first: index === 0,
 				second: index === 1,
@@ -34,17 +36,24 @@ onMounted(async () => {
 				<span class="score">{{ scoreEntry.score }}</span>
 			</div>
 		</div>
-		<br/>
-		<router-link to="/new-quiz" class="start-quiz-link">Démarrer le quiz !</router-link>
+		<p class="participation-count" v-else>No participation yet</p>
+		<br />
+		<router-link to="/new-quiz" class="start-quiz-link" v-if="questionCount > 0">Start the Quiz !</router-link>
+		<p class="simili-button" v-else>No questions</p>
 	</div>
 </template>
 
 <style scoped>
+.participation-count {
+	margin-top: 1rem;
+	font-size: 1.2em;
+}
+
 .start-quiz-link {
 	display: inline-block;
 	padding: 0.5rem 1rem;
-	background-color: #41b883;
-	color: white;
+	background-color: var(--vt-c-primary);
+	color: var(--vt-c-accent-text);
 	text-decoration: none;
 	border-radius: 5px;
 	font-weight: bold;
@@ -53,8 +62,24 @@ onMounted(async () => {
 }
 
 .start-quiz-link:hover {
-	background-color: #3a9d70;
+	background-color: var(--vt-c-primary-light);
+}
+
+.simili-button {
+	font-size: 1rem;
+	display: inline-block;
+	padding: 0.5rem 1rem;
+	background-color: var(--vt-c-greyed-out);
+	color: var(--vt-c-greyed-out-text);
+	border-radius: 5px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.simili-button:hover {
+	background-color: var(--vt-c-greyed-out-light);
+	cursor: not-allowed;
 }
 </style>
 
-<style src="../css/Scores.css"></style>
+<style src="../css/scores.css"></style>

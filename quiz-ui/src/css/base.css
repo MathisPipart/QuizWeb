@@ -19,6 +19,26 @@
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+
+  --vt-c-primary: #77dd77;
+  --vt-c-primary-light: #90ee90;
+
+  --vt-c-tertiary: #0056b3;
+  --vt-c-tertiary-light: #007bff;
+
+  --vt-c-important: #f94f4f;
+  --vt-c-important-light: #f76a6a;
+
+  --vt-c-accent-text: #ffffff;
+
+  --vt-c-leaderboard-first: linear-gradient(45deg, #ffd700, #ffc700);
+  --vt-c-leaderboard-second: linear-gradient(45deg, #c0c0c0, #b0b0b0);
+  --vt-c-leaderboard-third: linear-gradient(45deg, #cd7f32, #c67a30);
+
+  --vt-c-greyed-out: #d3d3d3;
+  --vt-c-greyed-out-light: #e0e0e0;
+  /* Text that is show in greyed out boxes */
+  --vt-c-greyed-out-text: #4e4e4e;
 }
 
 /* semantic color variables for this project */

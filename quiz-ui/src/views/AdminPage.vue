@@ -1,11 +1,13 @@
 <template>
-	<div class="admin-title">
-		<h1>Admin Dashboard</h1>
-		<admin-database @reset="handleReset" />
-	</div>
-	<div class="admin-page">
-		<admin-questions :isLeaderboardHidden="isLeaderboardHidden" ref="adminQuestions" />
-		<admin-leaderboard @toggle="toggleLeaderboard" ref="adminLeaderboard" />
+	<div class="whole-admin-page">
+		<div class="admin-title">
+			<h1>Admin Dashboard</h1>
+			<admin-database @reset="handleReset" />
+		</div>
+		<div class="admin-page">
+			<admin-questions class="questions-module" :isLeaderboardHidden="isLeaderboardHidden" ref="adminQuestions" />
+			<admin-leaderboard @toggle="toggleLeaderboard" ref="adminLeaderboard" />
+		</div>
 	</div>
 </template>
 
@@ -39,17 +41,33 @@ export default {
 </script>
 
 <style>
+.whole-admin-page {
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+.admin-title {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 20px;
+	flex-shrink: 0;
+	/* Prevents it from shrinking */
+}
+
 .admin-page {
 	display: flex;
-	height: 100vh;
-	position: relative;
+	flex-grow: 1;
+	/* Takes remaining space available */
+	overflow: hidden;
 }
 
 .questions-module {
 	flex: 1;
 	display: flex;
 	flex-direction: column;
-	overflow-x: auto;
+	overflow-y: auto;
 	transition: padding-right 0.3s ease;
 }
 
@@ -61,10 +79,7 @@ export default {
 	padding-right: 0;
 }
 
-.admin-title {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 20px;
+.admin-leaderboard {
+	display: none;
 }
 </style>

@@ -12,9 +12,10 @@ h1 {
   padding-bottom: 0%;
   text-align: left;
 }
+
 .Boite {
   position: relative;
-  background-color: white;
+  background-color: var(--color-background-soft);
   border-radius: 15px;
   padding: 20px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -22,6 +23,7 @@ h1 {
   margin: 0 auto;
   text-align: center;
 }
+
 .scoreboard {
   display: flex;
   flex-direction: column;
@@ -30,6 +32,7 @@ h1 {
   margin: 0 auto; /* Centre le scoreboard horizontalement */
   font-family: "gamay", sans-serif;
 }
+
 .scoreboard div {
   display: flex;
   justify-content: space-between;
@@ -38,42 +41,50 @@ h1 {
   padding: 15px 20px;
   margin: 10px 0;
   border-radius: 10px;
-  background-color: #f9f9f9;
+  background-color: var(--color-background-mute);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s;
 }
+
 .scoreboard div:hover {
   transform: scale(1.05);
 }
+
 .scoreboard .first {
-  background: linear-gradient(45deg, #ffd700, #ffc700);
+  background: var(--vt-c-leaderboard-first);
   font-weight: bold;
-  color: #fff;
+  color: var(--vt-c-accent-text);
 }
+
 .scoreboard .second {
-  background: linear-gradient(45deg, #c0c0c0, #b0b0b0);
+  background: var(--vt-c-leaderboard-second);
   font-weight: bold;
-  color: #fff;
+  color: var(--vt-c-accent-text);
 }
+
 .scoreboard .third {
-  background: linear-gradient(45deg, #cd7f32, #c67a30);
+  background: var(--vt-c-leaderboard-third);
   font-weight: bold;
-  color: #fff;
+  color: var(--vt-c-accent-text);
 }
+
 .scoreboard .other {
-  background-color: #fff;
+  background-color: var(--color-background-mute);
 }
+
 .position {
   width: 40px;
   text-align: center;
   font-size: 1.2em;
 }
+
 .name {
   flex-grow: 1;
   text-align: left;
   padding-left: 10px;
   font-size: 1.1em;
 }
+
 .score {
   width: 60px;
   text-align: right;
@@ -84,13 +95,14 @@ h1 {
   display: inline-block;
   margin-top: 2rem;
   padding: 0.5rem 1rem;
-  background-color: #41b883; /* Utilisez une couleur appropriée */
-  color: white;
+  background-color: var(--vt-c-primary);
+  color: var(--vt-c-accent-text);
   text-decoration: none;
   border-radius: 5px;
   font-weight: bold;
   text-align: center;
 }
+
 .home-button:hover {
-  background-color: #3a9d70; /* Couleur plus foncée pour l'effet hover */
+  background-color: var(--vt-c-primary-light);
 }

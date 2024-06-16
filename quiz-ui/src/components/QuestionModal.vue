@@ -2,17 +2,17 @@
 	<div class="modal-overlay" @click.self="closeModal" @keydown.esc="closeModal" tabindex="0">
 		<div class="modal-content">
 			<div class="form-group">
-				<label class="form-label">Title:</label>
+				<label class="form-label">Title</label>
 				<input type="text" v-model="editableQuestion.title" class="form-input"
 					:class="{ 'has-error': v$.editableQuestion.title.$error }" />
 			</div>
 			<div class="form-group">
-				<label class="form-label">Question text:</label>
+				<label class="form-label">Question</label>
 				<input v-model="editableQuestion.text" class="form-textarea"
 					:class="{ 'has-error': v$.editableQuestion.text.$error }" />
 			</div>
 			<div class="form-group">
-				<label class="form-label">Image:</label>
+				<label class="form-label">Image</label>
 				<input type="file" @change="uploadImage" class="form-input-file" />
 				<img v-if="editableQuestion.image" :src="editableQuestion.image" alt="Question Image"
 					class="question-image" />
@@ -20,14 +20,11 @@
 			<div class="answers-container">
 				<div v-for="(answer, index) in editableQuestion.possibleAnswers" :key="index"
 					class="answer-edit form-group">
-					<label class="form-label answer-label">Answer:</label>
+					<label class="form-label answer-label">Answer {{ index + 1 }}</label>
 					<div class="answer-row">
+						<input type="checkbox" v-model="answer.isCorrect" @change="setCorrectAnswer(index)"
+							class="input-checkbox" />
 						<input type="text" v-model="answer.text" class="form-input answer-input" />
-						<label class="correct-label">
-							Correct:
-							<input type="checkbox" v-model="answer.isCorrect" @change="setCorrectAnswer(index)"
-								class="input-checkbox" />
-						</label>
 						<button class="delete-button" @click="removeAnswer(index)">
 							Delete
 						</button>
@@ -132,6 +129,12 @@ export default {
 </script>
 
 <style scoped>
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
 .modal-overlay {
 	position: fixed;
 	top: 0;
@@ -147,7 +150,7 @@ export default {
 }
 
 .modal-content {
-	background-color: #fff;
+	background-color: var(--color-background-soft);
 	padding: 20px;
 	border-radius: 5px;
 	width: 90%;
@@ -159,24 +162,6 @@ export default {
 	flex-direction: column;
 }
 
-.close-button {
-	position: absolute;
-	top: 20px;
-	right: 20px;
-	font-size: 24px;
-	color: #fff;
-	background-color: #dc3545;
-	border: none;
-	border-radius: 50%;
-	width: 40px;
-	height: 40px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	cursor: pointer;
-	z-index: 1010;
-}
-
 .form-group {
 	margin-bottom: 20px;
 }
@@ -184,7 +169,7 @@ export default {
 .form-label {
 	display: block;
 	margin-bottom: 5px;
-	color: #555;
+	color: var(--color-text-muted);
 	font-weight: bold;
 	text-align: left;
 }
@@ -193,9 +178,18 @@ export default {
 .form-textarea,
 .form-input-file {
 	width: 100%;
-	border: 1px solid #ccc;
 	border-radius: 5px;
-	box-sizing: border-box;
+	border: none;
+	background-color: var(--color-background-mute);
+	color: var(--color-text);
+	padding: 10px;
+	outline: none;
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-input-file:focus {
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
 .form-textarea {
@@ -203,24 +197,11 @@ export default {
 	height: 50px;
 }
 
-.input-checkbox {
-	width: 30px;
-	height: 30px;
-	border: 1px solid #ccc;
-	border-radius: 3px;
-	cursor: pointer;
-}
-
-.question-image {
-	width: 100%;
-	max-height: 200px;
-	object-fit: cover;
-	margin-top: 10px;
-	border-radius: 5px;
+.has-error {
+	border-color: var(--vt-c-important);
 }
 
 .answers-container {
-	padding: 20px;
 	display: flex;
 	flex-wrap: wrap;
 	gap: 20px;
@@ -241,30 +222,42 @@ export default {
 .answer-row {
 	display: flex;
 	align-items: center;
+	gap: 0;
 }
 
 .answer-input {
 	flex-grow: 1;
-	margin-right: 10px;
+	border-radius: 0;
+	height: 50px;
 }
 
-.correct-label {
-	display: flex;
-	align-items: center;
-	margin-right: 10px;
+.input-checkbox {
+	width: 30px;
+	height: 50px;
+	border-radius: 3px;
+	cursor: pointer;
+	appearance: none;
+	background-color: var(--vt-c-tertiary);
+	border-radius: 5px 0 0 5px;
+	flex-grow: 1;
+}
+
+.input-checkbox:checked {
+	background-color: var(--vt-c-primary);
 }
 
 .delete-button {
-	background-color: #dc3545;
-	color: white;
+	background-color: var(--vt-c-important);
+	color: var(--vt-c-accent-text);
 	border: none;
-	border-radius: 5px;
-	padding: 5px 10px;
+	border-radius: 0 5px 5px 0;
+	padding: 10px;
 	cursor: pointer;
+	height: 50px;
 }
 
 .delete-button:hover {
-	background-color: #c82333;
+	background-color: var(--vt-c-important-light);
 }
 
 .button-group {
@@ -274,37 +267,38 @@ export default {
 	margin-top: 20px;
 }
 
-.add-answer-button {
-	flex: 1;
-	padding: 15px;
-	background-color: #007bff;
-	color: white;
-	border: none;
-	border-radius: 5px;
-	font-size: 18px;
-	cursor: pointer;
-}
-
-.add-answer-button:hover {
-	background-color: #0056b3;
-}
-
+.add-answer-button,
 .save-button {
 	flex: 1;
 	padding: 15px;
-	background-color: #28a745;
-	color: white;
+	color: var(--vt-c-accent-text);
 	border: none;
 	border-radius: 5px;
 	font-size: 18px;
 	cursor: pointer;
 }
 
-.save-button:hover {
-	background-color: #218838;
+.add-answer-button {
+	background-color: var(--vt-c-tertiary);
 }
 
-.has-error {
-	border-color: #dc3545;
+.add-answer-button:hover {
+	background-color: var(--vt-c-tertiary-light);
+}
+
+.save-button {
+	background-color: var(--vt-c-primary);
+}
+
+.save-button:hover {
+	background-color: var(--vt-c-primary-light);
+}
+
+.question-image {
+	width: 100%;
+	max-height: 200px;
+	object-fit: cover;
+	margin-top: 10px;
+	border-radius: 5px;
 }
 </style>

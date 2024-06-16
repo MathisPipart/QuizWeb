@@ -9,9 +9,19 @@
 					<h2 class="card-title">{{ question.title }}</h2>
 					<p class="card-description">{{ question.text }}</p>
 					<div class="card-buttons">
-						<button class="card-button" @click="editQuestion(qIndex)">
-							Edit
-						</button>
+						<div class="edit-button-whole">
+							<button class="move-left" @click="moveQuestion('left', qIndex)" v-if="qIndex > 0">
+								⬅
+							</button>
+							<button class="card-button" @click="editQuestion(qIndex)"
+								:class="{ 'round-left': qIndex == 0, 'round-right': qIndex == questionCount - 1 }">
+								Edit
+							</button>
+							<button class="move-right" @click="moveQuestion('right', qIndex)"
+								v-if="qIndex < questionCount - 1">
+								⮕
+							</button>
+						</div>
 						<button class="delete-button" @click="confirmDelete(qIndex)">
 							<i class="fas fa-trash-alt"></i>
 						</button>
@@ -138,6 +148,18 @@ export default {
 			this.currentQuestion = null;
 			this.currentQuestionIndex = null;
 		},
+		async moveQuestion(direction, qIndex) {
+			this.currentQuestion = { ...this.questions[qIndex] };
+			if (direction === "left" && qIndex > 0) {
+				this.currentQuestion.position -= 1;
+				await api.admin.question.update(this.currentQuestion.id, this.currentQuestion);
+				await this.fetchQuestions();
+			} else if (direction === "right" && qIndex < this.questionCount - 1) {
+				this.currentQuestion.position += 1;
+				await api.admin.question.update(this.currentQuestion.id, this.currentQuestion);
+				await this.fetchQuestions();
+			}
+		},
 	},
 };
 </script>
@@ -154,7 +176,7 @@ export default {
 }
 
 .question-card {
-	background-color: #fff;
+	background-color: var(--color-background-soft);
 	border-radius: 5px;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	overflow: hidden;
@@ -179,13 +201,10 @@ export default {
 
 .question-content {
 	padding: 10px;
-	/* Reduce padding */
 	flex-grow: 1;
-	/* Make the content take up remaining space */
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	/* Space out the elements vertically */
 }
 
 .card-title {
@@ -197,9 +216,10 @@ export default {
 
 .card-description {
 	font-size: 14px;
-	color: #555;
+	color: var(--color-text-muted);
 	margin-bottom: 10px;
-	/* Reduce margin */
+	height: 50px;
+	overflow-y: auto;
 }
 
 .card-buttons {
@@ -207,21 +227,58 @@ export default {
 	justify-content: space-between;
 }
 
-.card-button {
-	display: block;
+.edit-button-whole {
+	display: flex;
+	align-items: center;
 	width: calc(50% - 5px);
+}
+
+.card-button {
+	width: 100%;
+	display: block;
 	padding: 5px;
-	/* Reduce padding */
 	text-align: center;
-	background-color: #007bff;
-	color: white;
+	background-color: var(--vt-c-tertiary);
+	color: var(--vt-c-accent-text);
 	border: none;
-	border-radius: 5px;
 	cursor: pointer;
 }
 
+.round-left {
+	border-radius: 5px 0 0 5px;
+}
+
+.round-right {
+	border-radius: 0 5px 5px 0;
+}
+
 .card-button:hover {
-	background-color: #0056b3;
+	background-color: var(--vt-c-tertiary-light);
+}
+
+.move-left,
+.move-right {
+	width: calc(50% - 5px);
+	display: block;
+	padding: 5px;
+	text-align: center;
+	background-color: var(--vt-c-primary);
+	color: var(--vt-c-accent-text);
+	border: none;
+	cursor: pointer;
+}
+
+.move-left:hover,
+.move-right:hover {
+	background-color: var(--vt-c-primary-light);
+}
+
+.move-left {
+	border-radius: 5px 0 0 5px;
+}
+
+.move-right {
+	border-radius: 0 5px 5px 0;
 }
 
 .delete-button {
@@ -230,19 +287,19 @@ export default {
 	padding: 5px;
 	/* Reduce padding */
 	text-align: center;
-	background-color: #f94f4f;
-	color: white;
+	background-color: var(--vt-c-important);
+	color: var(--vt-c-accent-text);
 	border: none;
 	border-radius: 5px;
 	cursor: pointer;
 }
 
 .delete-button i {
-	color: white;
+	color: var(--vt-c-accent-text);
 }
 
 .delete-button:hover {
-	background-color: #f76a6a;
+	background-color: var(--vt-c-important-light);
 }
 
 .add-question-card {
@@ -251,7 +308,7 @@ export default {
 	justify-content: center;
 	height: 300px;
 	/* Same fixed height as the question cards */
-	background-color: #f2f2f2;
+	background-color: var(--color-background-soft);
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	border-radius: 5px;
 	cursor: pointer;
@@ -265,6 +322,6 @@ export default {
 
 .add-button {
 	font-size: 2em;
-	color: #aaa;
+	color: var(--color-text-muted);
 }
 </style>

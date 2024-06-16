@@ -4,7 +4,10 @@
 			{{ isLeaderboardHidden ? "Show Leaderboard" : "Hide Leaderboard" }}
 		</button>
 		<div :class="['leaderboard-module', { hidden: isLeaderboardHidden }]">
-			<h2>Leaderboard</h2>
+			<h2 class="leadertitle">Leaderboard</h2>
+			<p class="participation-count">
+				{{ participationCount }} participation{{ participationCount > 1 ? "s" : "" }}
+			</p>
 			<div class="scoreboard">
 				<div v-for="(score, index) in scores" :key="score.playerName" :class="{
 					first: index === 0,
@@ -39,7 +42,8 @@ export default {
 			showResetModal: false,
 			scores: [],
 			questionCount: 0,
-			isLeaderboardHidden: true, // Hidden by default
+			participationCount: 0,
+			isLeaderboardHidden: true,
 		};
 	},
 	async mounted() {
@@ -58,15 +62,17 @@ export default {
 			this.scores = data.scores;
 			this.scores.sort((a, b) => b.score - a.score);
 			this.questionCount = data.size;
+			this.participationCount = this.scores.length;
 		},
 		async resetLeaderboard() {
 			await api.admin.participation.deleteAll();
 			await this.fetchScores();
 			this.closeResetModal();
 		},
-		toggleLeaderboard() {
+		async toggleLeaderboard() {
 			this.isLeaderboardHidden = !this.isLeaderboardHidden;
 			this.$emit("toggle", this.isLeaderboardHidden);
+			await this.fetchScores();
 		},
 	},
 };
@@ -82,9 +88,8 @@ export default {
 	display: flex;
 	flex-direction: column;
 	padding: 20px;
-	background-color: #f7f7f7;
+	background-color: var(--color-background);
 	box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
-	border-left: 1px solid #ccc;
 	box-sizing: border-box;
 	transition: transform 0.3s ease;
 	transform: translateX(100%);
@@ -99,12 +104,22 @@ export default {
 	transform: translateX(0);
 }
 
+.leadertitle {
+	margin-bottom: 10px;
+	text-align: center;
+}
+
+.participation-count {
+	margin-bottom: 10px;
+	text-align: center;
+}
+
 .show-leaderboard-button {
 	position: fixed;
 	bottom: 10px;
 	right: 10px;
-	background-color: #007bff;
-	color: white;
+	background-color: var(--vt-c-tertiary);
+	color: var(--vt-c-accent-text);
 	border: none;
 	padding: 10px;
 	cursor: pointer;
@@ -113,18 +128,11 @@ export default {
 }
 
 .show-leaderboard-button:hover {
-	background-color: #0056b3;
+	background-color: var(--vt-c-tertiary-light);
 }
 
-.close-button {
-	position: absolute;
-	top: 10px;
-	right: 10px;
-	background-color: transparent;
-	border: none;
-	font-size: 24px;
-	cursor: pointer;
-	z-index: 1000;
+.participation-count {
+	margin-bottom: 10px;
 }
 
 .scoreboard {
@@ -132,6 +140,11 @@ export default {
 	overflow-y: auto;
 	padding: 0;
 	margin: 0 0;
+	max-width: 10000px;
+}
+
+.scoreboard div:hover {
+	transform: scale(1);
 }
 
 .leaderboard-item {
@@ -141,8 +154,8 @@ export default {
 
 .reset-button {
 	padding: 10px 20px;
-	background-color: #f94f4f;
-	color: white;
+	background-color: var(vt-c-important);
+	color: var(--vt-c-accent-text);
 	border: none;
 	border-radius: 5px;
 	cursor: pointer;
@@ -153,6 +166,6 @@ export default {
 }
 
 .reset-button:hover {
-	background-color: #f76a6a;
+	background-color: var(--vt-c-important-light);
 }
 </style>

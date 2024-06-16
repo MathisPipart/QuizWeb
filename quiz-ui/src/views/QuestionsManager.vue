@@ -96,7 +96,6 @@ const endQuiz = async () => {
 	participationStorageService.saveParticipationScore(score.value);
 	await api.quiz.participation.add({
 		playerName: playerName.value,
-		score: score.value,
 		answers: selectedAnswersIndex.value
 	});
 
@@ -127,36 +126,36 @@ const endQuiz = async () => {
 		<h1>Quiz terminé !</h1>
 		<p class="Thanks">Merci d'avoir participé à ce quiz, {{ playerName }}.<br> Votre score est de : {{ score }} / {{
 			totalNumberOfQuestion }}</p>
-        <div class="Boite">
-            <h2>Meilleurs scores des autres joueurs</h2>
-            <div class="scoreboard">
-                <div v-for="(playerScore, index) in registeredScores" :key="playerScore.playerName" :class="{
-                    first: index === 0,
-                    second: index === 1,
-                    third: index === 2,
-                    fourth: index === 3,
-                    fifth: index === 4,
-                    other: index >= 5,
-                }">
-                    <span class="position">{{ index + 1 }}</span>
-                    <span class="name">{{ playerScore.playerName }}</span>
-                    <span class="score">{{ playerScore.score }}</span>
-                </div>
-            </div>
-            <!-- Bouton pour revenir à la page Home -->
-            <RouterLink to="/" class="home-button">
-                Revenir à la page Home
-            </RouterLink>
-        </div>
+		<div class="Boite">
+			<h2>Meilleurs scores des autres joueurs</h2>
+			<div class="scoreboard">
+				<div v-for="(playerScore, index) in registeredScores" :key="playerScore.playerName" :class="{
+					first: index === 0,
+					second: index === 1,
+					third: index === 2,
+					fourth: index === 3,
+					fifth: index === 4,
+					other: index >= 5,
+				}">
+					<span class="position">{{ index + 1 }}</span>
+					<span class="name">{{ playerScore.playerName }}</span>
+					<span class="score">{{ playerScore.score }}</span>
+				</div>
+			</div>
+			<!-- Bouton pour revenir à la page Home -->
+			<RouterLink to="/" class="home-button">
+				Revenir à la page Home
+			</RouterLink>
+		</div>
 	</div>
 </template>
 
 
 <style scoped>
-.BoxQuestion{
+.BoxQuestion {
 	position: relative;
-	background-color: white;
-	border-radius: 15px;
+	background-color: var(--color-background-soft);
+	border-radius: 5px;
 	padding: 20px;
 	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 	max-width: 800px;
@@ -167,11 +166,12 @@ const endQuiz = async () => {
 .BoxInfo {
 	position: relative;
 	width: 250px;
-	border-radius: 15px;
+	border-radius: 5px;
 	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 	margin-right: 2%;
 	float: right;
 	text-align: center;
+	background-color: var(--color-background-soft);
 }
 
 .question-wrapper {
@@ -184,8 +184,8 @@ const endQuiz = async () => {
 	display: inline-block;
 	margin-top: 2rem;
 	padding: 0.5rem 1rem;
-	background-color: #41b883;
-	color: white;
+	background-color: var(--vt-c-primary);
+	color: var(--vt-c-accent-text);
 	text-decoration: none;
 	border-radius: 5px;
 	font-weight: bold;
@@ -193,7 +193,7 @@ const endQuiz = async () => {
 }
 
 .home-button:hover {
-	background-color: #3a9d70;
+	background-color: var(--vt-c-primary-light)
 }
 
 .Joueur {
@@ -208,13 +208,15 @@ const endQuiz = async () => {
 	padding-top: 2%;
 	padding-bottom: 2%;
 }
-.Score{
+
+.Score {
 	text-align: center;
 	margin-right: 2%;
 	padding-bottom: 5%;
 }
-.Thanks{
+
+.Thanks {
 	text-align: center;
 }
 </style>
-<style src="../css/Scores.css"></style>
+<style src="../css/scores.css"></style>
