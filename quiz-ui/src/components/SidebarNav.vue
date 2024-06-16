@@ -122,7 +122,7 @@ export default {
 }
 
 .sidebar.collapsed nav,
-.sidebar.collapsed .logo {
+.sidebar.collapsed .logo-image {
 	display: none;
 }
 

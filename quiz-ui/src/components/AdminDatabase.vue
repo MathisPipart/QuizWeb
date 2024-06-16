@@ -192,7 +192,7 @@ export default {
 				{
 					title: "Question 1",
 					text: "Quel est le premier jeu Zelda qui permet de sauvegarder sa partie ?",
-					image: "/src/assets/zelda-placeholder.jpg",
+					image: "/src/assets/thumbnails/1.png",
 					position: 1,
 					possibleAnswers: [
 						{ text: "The Legend of Zelda", isCorrect: true },
@@ -204,7 +204,7 @@ export default {
 				{
 					title: "Question 2",
 					text: "Quel est le premier jeu Zelda en 3D ?",
-					image: "/src/assets/zelda-placeholder.jpg",
+					image: "/src/assets/thumbnails/2.png",
 					position: 2,
 					possibleAnswers: [
 						{ text: "The Legend of Zelda: The Wind Waker", isCorrect: false },
@@ -216,7 +216,7 @@ export default {
 				{
 					title: "Question 3",
 					text: "Quel est le premier jeu Zelda sur console portable ?",
-					image: "/src/assets/zelda-placeholder.jpg",
+					image: "/src/assets/thumbnails/3.png",
 					position: 3,
 					possibleAnswers: [
 						{ text: "The Legend of Zelda: Oracle of Seasons", isCorrect: false },
@@ -228,7 +228,7 @@ export default {
 				{
 					title: "Question 4",
 					text: "Quel est le premier jeu de la chronologie officielle de Zelda ?",
-					image: "/src/assets/zelda-placeholder.jpg",
+					image: "/src/assets/thumbnails/4.png",
 					position: 4,
 					possibleAnswers: [
 						{ text: "The Legend of Zelda", isCorrect: false },
@@ -240,7 +240,7 @@ export default {
 				{
 					title: "Question 5",
 					text: "Combien y a-t-il de jeux Zelda de la série principale ?",
-					image: "/src/assets/zelda-placeholder.jpg",
+					image: "/src/assets/thumbnails/5.png",
 					position: 5,
 					possibleAnswers: [
 						{ text: "16", isCorrect: false },
@@ -252,7 +252,7 @@ export default {
 				{
 					title: "Question 6",
 					text: "Nintendo a développé tous les jeux Zelda de la série principale.",
-					image: "/src/assets/zelda-placeholder.jpg",
+					image: "/src/assets/thumbnails/6.png",
 					position: 6,
 					possibleAnswers: [
 						{ text: "Vrai", isCorrect: false },
@@ -262,7 +262,7 @@ export default {
 				{
 					title: "Question 7",
 					text: "Quelle est l'année de sortie du premier jeu Zelda ?",
-					image: "/src/assets/zelda-placeholder.jpg",
+					image: "/src/assets/thumbnails/7.png",
 					position: 7,
 					possibleAnswers: [
 						{ text: "1986", isCorrect: true },
@@ -274,7 +274,7 @@ export default {
 				{
 					title: "Question 8",
 					text: "Lequel n'est pas un ennemi dans Zelda ?",
-					image: "/src/assets/zelda-placeholder.jpg",
+					image: "/src/assets/thumbnails/8.png",
 					position: 8,
 					possibleAnswers: [
 						{ text: "Goomba", isCorrect: false },
@@ -286,7 +286,7 @@ export default {
 				{
 					title: "Question 9",
 					text: "Quel est le Zelda le mieux noté (selon Metacritic) ?",
-					image: "/src/assets/zelda-placeholder.jpg",
+					image: "/src/assets/thumbnails/9.png",
 					position: 9,
 					possibleAnswers: [
 						{ text: "The Legend of Zelda: Majora's Mask", isCorrect: false },
@@ -298,7 +298,7 @@ export default {
 				{
 					title: "Question 10",
 					text: "Quelle console Nintendo n'a pas eu de Zelda exclusif ?",
-					image: "/src/assets/zelda-placeholder.jpg",
+					image: "/src/assets/thumbnails/10.png",
 					position: 10,
 					possibleAnswers: [
 						{ text: "GameCube", isCorrect: false },
@@ -310,7 +310,7 @@ export default {
 				{
 					title: "Question 11",
 					text: "Link n'a jamais parlé.",
-					image: "/src/assets/zelda-placeholder.jpg",
+					image: "/src/assets/thumbnails/11.png",
 					position: 11,
 					possibleAnswers: [
 						{ text: "Vrai", isCorrect: false },
@@ -320,7 +320,7 @@ export default {
 				{
 					title: "Question 12",
 					text: "Combien de jeux Zelda ne sont pas sortis sur une console Nintendo ?",
-					image: "/src/assets/zelda-placeholder.jpg",
+					image: "/src/assets/thumbnails/12.png",
 					position: 12,
 					possibleAnswers: [
 						{ text: "0", isCorrect: false },
@@ -332,7 +332,7 @@ export default {
 				{
 					title: "Question 13",
 					text: "Lequel n'est pas un compagnon de Link ?",
-					image: "/src/assets/zelda-placeholder.jpg",
+					image: "/src/assets/thumbnails/13.png",
 					position: 13,
 					possibleAnswers: [
 						{ text: "Navi", isCorrect: false },
@@ -344,7 +344,7 @@ export default {
 				{
 					title: "Question 14",
 					text: "Lequel de ces jeux est un spin-off officiel ?",
-					image: "/src/assets/zelda-placeholder.jpg",
+					image: "/src/assets/thumbnails/14.png",
 					position: 14,
 					possibleAnswers: [
 						{ text: "Cadence of Hyrule", isCorrect: true },
@@ -356,7 +356,7 @@ export default {
 				{
 					title: "Question 15",
 					text: "Quelle société a déjà détenu les droits sur la licence Zelda ?",
-					image: "/src/assets/zelda-placeholder.jpg",
+					image: "/src/assets/thumbnails/15.png",
 					position: 15,
 					possibleAnswers: [
 						{ text: "Sony", isCorrect: false },
@@ -370,7 +370,7 @@ export default {
 				{
 					title: "Question 16",
 					text: "Quel jeu est sorti un 3 mars ?",
-					image: "/src/assets/zelda-placeholder.jpg",
+					image: "/src/assets/thumbnails/16.png",
 					position: 16,
 					possibleAnswers: [
 						{ text: "The Legend of Zelda: Twilight Princess", isCorrect: false },
@@ -382,7 +382,7 @@ export default {
 				{
 					title: "Question 17",
 					text: "Dans quel jeu il n'y a pas le personnage de Zelda ?",
-					image: "/src/assets/zelda-placeholder.jpg",
+					image: "/src/assets/thumbnails/17.png",
 					position: 17,
 					possibleAnswers: [
 						{ text: "The Legend of Zelda: Link's Awakening", isCorrect: true },
@@ -395,7 +395,7 @@ export default {
 				{
 					title: "Question 18",
 					text: "Link est-il amoureux de Zelda ?",
-					image: "/src/assets/zelda-placeholder.jpg",
+					image: "/src/assets/thumbnails/18.png",
 					position: 18,
 					possibleAnswers: [
 						{ text: "Vrai", isCorrect: false },
@@ -406,7 +406,7 @@ export default {
 				{
 					title: "Question 19",
 					text: "Lequel n'est pas l'antagoniste d'un jeu Zelda ?",
-					image: "/src/assets/zelda-placeholder.jpg",
+					image: "/src/assets/thumbnails/19.png",
 					position: 19,
 					possibleAnswers: [
 						{ text: "Ganondorf", isCorrect: false },
@@ -418,7 +418,7 @@ export default {
 				{
 					title: "Question 20",
 					text: "Quelle console n'a pas eu de version collector Zelda ?",
-					image: "/src/assets/zelda-placeholder.jpg",
+					image: "/src/assets/thumbnails/20.png",
 					position: 20,
 					possibleAnswers: [
 						{ text: "GameBoy Advance SP", isCorrect: false },
@@ -430,19 +430,19 @@ export default {
 				{
 					title: "Question 21",
 					text: "Quel collector contient une figurine de Ganondorf ?",
-					image: "/src/assets/zelda-placeholder.jpg",
+					image: "/src/assets/thumbnails/21.png",
 					position: 21,
 					possibleAnswers: [
-						{ text: "The Legend of Zelda: Twilight Princess HD", isCorrect: false },
-						{ text: "The Legend of Zelda: Twilight Princess", isCorrect: false },
 						{ text: "The Legend of Zelda: The Wind Waker", isCorrect: false },
+						{ text: "The Legend of Zelda: Twilight Princess", isCorrect: false },
 						{ text: "The Legend of Zelda: The Wind Waker HD", isCorrect: true },
+						{ text: "The Legend of Zelda: Twilight Princess HD", isCorrect: false },
 					],
 				},
 				{
 					title: "Question 22",
 					text: "Quel jeu n'est pas ressorti plus tard (remake, remaster et portage) ?",
-					image: "/src/assets/zelda-placeholder.jpg",
+					image: "/src/assets/thumbnails/22.png",
 					position: 22,
 					possibleAnswers: [
 						{ text: "The Legend of Zelda: A Link to the Past", isCorrect: false },
@@ -454,7 +454,7 @@ export default {
 				{
 					title: "Question 23",
 					text: "Quel est le jeu Zelda qui a introduit les fragments de cœur ?",
-					image: "/src/assets/zelda-placeholder.jpg",
+					image: "/src/assets/thumbnails/23.png",
 					position: 23,
 					possibleAnswers: [
 						{ text: "The Legend of Zelda", isCorrect: false },
@@ -466,7 +466,7 @@ export default {
 				{
 					title: "Question 24",
 					text: "Quel est le nom du bateau dans The Legend of Zelda: The Wind Waker ?",
-					image: "/src/assets/zelda-placeholder.jpg",
+					image: "/src/assets/thumbnails/24.png",
 					position: 24,
 					possibleAnswers: [
 						{ text: "Le Lion Rouge", isCorrect: true },
@@ -478,7 +478,7 @@ export default {
 				{
 					title: "Question 25",
 					text: "Quel est le sous-titre du jeu The Legend of Zelda sur NES en version japonaise ?",
-					image: "/src/assets/zelda-placeholder.jpg",
+					image: "/src/assets/thumbnails/25.png",
 					position: 25,
 					possibleAnswers: [
 						{ text: "Hyrule Fantasy", isCorrect: true },
@@ -490,7 +490,7 @@ export default {
 				{
 					title: "Question 26",
 					text: "Quel est le nom de l'arme principale de Link dans The Legend of Zelda: Skyward Sword ?",
-					image: "/src/assets/zelda-placeholder.jpg",
+					image: "/src/assets/thumbnails/26.png",
 					position: 26,
 					possibleAnswers: [
 						{ text: "Lame Purificatrice", isCorrect: false },
@@ -502,7 +502,7 @@ export default {
 				{
 					title: "Question 27",
 					text: "Dans The Legend of Zelda: Breath of the Wild, combien de sanctuaires faut-il compléter pour obtenir toutes les âmes ?",
-					image: "/src/assets/zelda-placeholder.jpg",
+					image: "/src/assets/thumbnails/27.png",
 					position: 27,
 					possibleAnswers: [
 						{ text: "120", isCorrect: true },
@@ -514,7 +514,7 @@ export default {
 				{
 					title: "Question 28",
 					text: "Quel est le nom de la tribu habitant la montagne de la Mort dans The Legend of Zelda: Ocarina of Time ?",
-					image: "/src/assets/zelda-placeholder.jpg",
+					image: "/src/assets/thumbnails/28.png",
 					position: 28,
 					possibleAnswers: [
 						{ text: "Les Gorons", isCorrect: true },
@@ -526,7 +526,7 @@ export default {
 				{
 					title: "Question 29",
 					text: "Quel est le nom du dragon de feu dans The Legend of Zelda: Breath of the Wild ?",
-					image: "/src/assets/zelda-placeholder.jpg",
+					image: "/src/assets/thumbnails/29.png",
 					position: 29,
 					possibleAnswers: [
 						{ text: "Rordrac", isCorrect: false },
@@ -538,7 +538,7 @@ export default {
 				{
 					title: "Question 30",
 					text: "Dans quel jeu Zelda peut-on retrouver Tetra ?",
-					image: "/src/assets/zelda-placeholder.jpg",
+					image: "/src/assets/thumbnails/30.png",
 					position: 30,
 					possibleAnswers: [
 						{ text: "The Legend of Zelda: The Wind Waker", isCorrect: true },
