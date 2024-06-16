@@ -1,19 +1,27 @@
 <template>
-	<div class="sidebar">
-		<router-link to="/" class="no-hover">
-			<div class="logo">
-				<img src="/src/assets/logo.png" alt="Quiz Logo" class="logo-image" />
-			</div>
-		</router-link>
+	<div>
+		<div :class="['sidebar', { collapsed: isCollapsed, overlay: isOverlay, visible: isVisible }]">
+			<router-link to="/" class="no-hover">
+				<div class="logo">
+					<img src="/src/assets/logo.png" alt="Quiz Logo" class="logo-image" />
+				</div>
+			</router-link>
 
-		<nav>
-			<router-link to="/" class="to-top user">Home</router-link>
-			<div class="spacer"></div>
-			<a @click="signOut" v-if="store.token" class="to-bottom user">Sign Out</a>
-			<a @click="openLogin" class="to-bottom admin" :class="{ selected: isInAdmin }">Admin</a>
-		</nav>
+			<nav v-if="!isCollapsed">
+				<router-link to="/" class="to-top user">Home</router-link>
+				<div class="spacer"></div>
+				<a @click="signOut" v-if="store.token" class="to-bottom user">Sign Out</a>
+				<a @click="openLogin" class="to-bottom admin" :class="{ selected: isInAdmin }">Admin</a>
+			</nav>
 
-		<AdminLogin v-if="isLogin" @close="closeLogin" class="modal" />
+			<AdminLogin v-if="isLogin" @close="closeLogin" class="modal" />
+		</div>
+
+		<!-- Floating Toggle Button -->
+		<div class="toggle-btn floating" @click="toggleSidebar">
+			<span v-if="isCollapsed || isOverlay">▶️</span>
+			<span v-else>◀️</span>
+		</div>
 	</div>
 </template>
 
@@ -31,6 +39,9 @@ export default {
 	data() {
 		return {
 			isLogin: false,
+			isCollapsed: false,
+			isOverlay: false,
+			isVisible: true,
 		};
 	},
 	components: {
@@ -42,6 +53,14 @@ export default {
 		},
 	},
 	methods: {
+		toggleSidebar() {
+			if (this.isOverlay) {
+				this.isVisible = !this.isVisible;
+			} else {
+				this.isCollapsed = !this.isCollapsed;
+			}
+			this.$emit('toggle', { isCollapsed: this.isCollapsed, isOverlay: this.isOverlay });
+		},
 		openLogin() {
 			if (!this.store.token) {
 				this.isLogin = true;
@@ -56,21 +75,57 @@ export default {
 			this.store.logout();
 			this.store.fetchUser();
 		},
+		updateSidebarVisibility() {
+			this.isOverlay = window.innerWidth < 768; // Adjust the breakpoint as needed
+			this.isVisible = window.innerWidth >= 768;
+		},
+	},
+	mounted() {
+		window.addEventListener('resize', this.updateSidebarVisibility);
+		this.updateSidebarVisibility();
+	},
+	beforeUnmount() {
+		window.removeEventListener('resize', this.updateSidebarVisibility);
 	},
 };
 </script>
 
-<style>
+
+<style scoped>
 .sidebar {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	padding: 1rem;
-	width: 12%;
+	width: 250px;
+	/* Fixed size */
 	box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 	height: 100vh;
 	z-index: 1;
 	background-color: var(--color-background-soft);
+	position: fixed;
+	left: 0;
+	top: 0;
+	transition: transform 0.3s ease, width 0.3s ease;
+}
+
+.collapsed {
+	width: 50px;
+}
+
+.overlay {
+	transform: translateX(-100%);
+	position: absolute;
+	z-index: 2;
+}
+
+.overlay.visible {
+	transform: translateX(0);
+}
+
+.sidebar.collapsed nav,
+.sidebar.collapsed .logo {
+	display: none;
 }
 
 .logo {
@@ -158,5 +213,40 @@ nav a.to-bottom {
 
 .no-hover:hover {
 	background-color: transparent;
+}
+
+.toggle-btn {
+	cursor: pointer;
+	align-self: flex-end;
+	background: var(--color-background-soft);
+	border: 1px solid var(--color-border);
+	border-radius: 50%;
+	padding: 0.5rem;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-btn span {
+	font-size: 1.5rem;
+	display: block;
+}
+
+.floating {
+	position: fixed;
+	top: 10px;
+	left: 10px;
+	z-index: 3;
+	cursor: pointer;
+}
+
+@media (max-width: 768px) {
+	.sidebar {
+		transform: translateX(-100%);
+		width: 250px;
+		/* Maintain width for collapsed state */
+	}
+
+	.sidebar.visible {
+		transform: translateX(0);
+	}
 }
 </style>

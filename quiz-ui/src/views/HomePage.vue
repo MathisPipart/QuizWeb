@@ -59,9 +59,7 @@ const closeUsernameModal = () => {
 				first: index === 0,
 				second: index === 1,
 				third: index === 2,
-				fourth: index === 3,
-				fifth: index === 4,
-				other: index >= 5,
+				other: index >= 3,
 			}">
 				<span class="position">{{ index + 1 }}</span>
 				<span class="name">{{ scoreEntry.playerName }}</span>
@@ -70,8 +68,7 @@ const closeUsernameModal = () => {
 		</div>
 		<p class="participation-count" v-else>No participation yet</p>
 		<br />
-		<!-- <router-link to="/new-quiz" class="start-quiz-link" v-if="questionCount > 0">Start the Quiz !</router-link> -->
-		<button class="start-quiz-link" @click="showLaunchModal = true" v-if="questionCount > 0">Start the Quiz
+		<button class="start-quiz-link" @click="showLaunchModal = true" v-if="questionCount > 0">Start Quiz
 			!</button>
 		<p class="simili-button" v-else>No questions</p>
 	</div>
@@ -82,13 +79,34 @@ const closeUsernameModal = () => {
 </template>
 
 <style scoped>
-.participation-count {
-	margin-top: 1rem;
-	font-size: 1.2em;
+body {
+	font-family: 'Arial', sans-serif;
+	line-height: 1.6;
+}
+
+h1,
+h2 {
+	text-align: center;
+}
+
+.Boite {
+	width: 100%;
+	max-width: 900px;
+	margin: 0 auto;
+	padding: 1rem;
+	background-color: var(--color-background-soft);
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	transition: all 0.3s ease;
+	padding: 20px;
+	text-align: center;
 }
 
 .start-quiz-link {
 	display: inline-block;
+	width: 100%;
+	max-width: 250px;
+	margin: 0.5rem auto;
 	padding: 0.5rem 1rem;
 	background-color: var(--vt-c-primary);
 	color: var(--vt-c-accent-text);
@@ -98,6 +116,7 @@ const closeUsernameModal = () => {
 	text-align: center;
 	transition: background-color 0.3s;
 	border: none;
+	cursor: pointer;
 }
 
 .start-quiz-link:hover {
@@ -105,8 +124,10 @@ const closeUsernameModal = () => {
 }
 
 .simili-button {
-	font-size: 1rem;
 	display: inline-block;
+	width: 100%;
+	max-width: 250px;
+	margin: 0.5rem auto;
 	padding: 0.5rem 1rem;
 	background-color: var(--vt-c-greyed-out);
 	color: var(--vt-c-greyed-out-text);
@@ -146,21 +167,49 @@ const closeUsernameModal = () => {
 	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-.close-button {
-	margin-top: 20px;
-	padding: 10px 20px;
-	background-color: var(--vt-c-primary);
-	color: var(--vt-c-accent-text);
-	border: none;
-	border-radius: 5px;
-	cursor: pointer;
-	font-weight: bold;
+.participation-count {
+	margin-top: 1rem;
+	font-size: 1.2em;
 	text-align: center;
 }
 
-.close-button:hover {
-	background-color: var(--vt-c-primary-light);
+/* Media Queries */
+@media (max-width: 768px) {
+	.Boite {
+		width: 95%;
+		padding: 1rem;
+	}
+
+	.scoreboard {
+		gap: 0.5rem;
+	}
+
+	.start-quiz-link,
+	.simili-button {
+		width: 100%;
+	}
+
+	.modal-content {
+		width: 95%;
+	}
+}
+
+@media (max-width: 480px) {
+	.Boite {
+		width: 100%;
+		padding: 0.5rem;
+	}
+
+	.start-quiz-link,
+	.simili-button {
+		width: 100%;
+		font-size: 0.9rem;
+		padding: 0.5rem 0.8rem;
+	}
+
+	.modal-content {
+		width: 90%;
+		padding: 10px;
+	}
 }
 </style>
-
-<style src="../css/scores.css"></style>
