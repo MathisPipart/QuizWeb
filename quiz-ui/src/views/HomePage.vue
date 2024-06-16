@@ -50,7 +50,7 @@ const closeUsernameModal = () => {
 </script>
 
 <template>
-	<h1>Quizzer</h1>
+	<h1>Hyrule Quiz</h1>
 	<br />
 	<div class="Boite">
 		<h2>Leaderboard</h2>

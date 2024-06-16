@@ -4,7 +4,8 @@
 		<h2 class="db-title">Database Management</h2>
 		<div class="database-buttons">
 			<button class="empty" @click="clearDatabase">Empty</button>
-			<button class="load-default" @click="initDatabase">Load Default</button>
+			<button class="load-default" @click="initDatabase">Add Questions</button>
+			<button class="load-participation" @click="loadParticipation">Add Participations</button>
 		</div>
 	</div>
 
@@ -34,7 +35,26 @@ export default {
 				await api.admin.question.add(question);
 			}
 
-			// TEMPORARY: FILL DATABASE WITH DEFAULT ANSWERS
+			this.$emit("reset");
+		},
+		async convertImageToBase64(imageUrl) {
+			try {
+				const response = await fetch(imageUrl);
+				const blob = await response.blob();
+				return new Promise((resolve, reject) => {
+					const reader = new FileReader();
+					reader.onloadend = () => {
+						resolve(reader.result);
+					};
+					reader.onerror = reject;
+					reader.readAsDataURL(blob);
+				});
+			} catch (error) {
+				console.error('Error fetching image:', error);
+				throw error;
+			}
+		},
+		async loadParticipation() {
 			const scores = [
 				{
 					playerName: "Alice Smith",
@@ -164,26 +184,7 @@ export default {
 			for (const score of scores) {
 				await api.quiz.participation.add(score);
 			}
-
-			this.$emit("reset");
-		},
-		async convertImageToBase64(imageUrl) {
-			try {
-				const response = await fetch(imageUrl);
-				const blob = await response.blob();
-				return new Promise((resolve, reject) => {
-					const reader = new FileReader();
-					reader.onloadend = () => {
-						resolve(reader.result);
-					};
-					reader.onerror = reject;
-					reader.readAsDataURL(blob);
-				});
-			} catch (error) {
-				console.error('Error fetching image:', error);
-				throw error;
-			}
-		},
+		}
 	},
 	data() {
 		return {

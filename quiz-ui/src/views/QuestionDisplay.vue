@@ -1,3 +1,22 @@
+<template>
+	<div>
+		<h2 class="question-title">{{ currentQuestion.title }}</h2>
+		<h2 class="currentQuestion">{{ currentQuestion.text }}</h2>
+		<div class="image-container" v-if="currentQuestion.image">
+			<img :src="currentQuestion.image" alt="Question image" class="question-image">
+		</div>
+		<div class="options-container">
+			<div class="question-option" v-for="(option, index) in currentQuestion.options" :key="index"
+				@click="handleOptionClick(index)" :class="{
+					correct: selectedOption === index && option === currentQuestion.correctAnswer,
+					incorrect: selectedOption === index && option !== currentQuestion.correctAnswer
+				}">
+				{{ option }}
+			</div>
+		</div>
+	</div>
+</template>
+
 <script>
 export default {
 	props: {
@@ -27,28 +46,27 @@ export default {
 }
 </script>
 
-
-<template>
-	<h2 class="currentQuestion">{{ currentQuestion.text }}</h2>
-	<div class="image-container" v-if="currentQuestion.image">
-		<img :src="currentQuestion.image" alt="Question image" class="question-image">
-	</div>
-	<div class="options-container">
-		<div class="question-option" v-for="(option, index) in currentQuestion.options" :key="index"
-			@click="handleOptionClick(index)" :class="{
-				correct: selectedOption === index && option === currentQuestion.correctAnswer,
-				incorrect: selectedOption === index && option !== currentQuestion.correctAnswer
-			}">
-			{{ option }}
-		</div>
-	</div>
-</template>
-
-
 <style scoped>
+/* Styling for the question title */
+.question-title {
+	font-weight: bold;
+	margin-bottom: 15px;
+	/* Increased margin for better spacing */
+	text-align: center;
+}
+
+.currentQuestion {
+	text-align: center;
+	margin-top: 20px;
+	/* Added margin to create space above the text */
+	margin-bottom: 4%;
+	font-size: 1.2rem;
+}
+
 .image-container {
 	width: 100%;
-	height: 300px;
+	max-width: 100%;
+	height: auto;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -58,7 +76,7 @@ export default {
 
 .question-image {
 	width: 100%;
-	height: 100%;
+	max-height: 300px;
 	object-fit: cover;
 	object-position: center;
 	border-radius: 5px;
@@ -69,6 +87,7 @@ export default {
 	grid-template-columns: 1fr 1fr;
 	gap: 0.5rem;
 	max-width: 100%;
+	width: 100%;
 }
 
 .question-option {
@@ -80,9 +99,10 @@ export default {
 	text-align: center;
 	color: var(--vt-c-accent-text);
 	word-wrap: break-word;
+	font-size: 1rem;
 }
 
-/* Make the last item take the full width if it's alone */
+/* Full width for single options on smaller screens */
 .options-container> :nth-child(odd):last-child {
 	grid-column: span 2;
 }
@@ -99,9 +119,26 @@ export default {
 	background-color: var(--vt-c-important);
 }
 
-.currentQuestion {
-	text-align: center;
-	margin-top: -3%;
-	margin-bottom: 4%;
+/* Responsive adjustments for options */
+@media (max-width: 768px) {
+	.options-container {
+		grid-template-columns: 1fr;
+	}
+
+	.question-option {
+		padding: 0.5rem;
+		font-size: 0.9rem;
+	}
+}
+
+@media (max-width: 480px) {
+	.options-container {
+		grid-template-columns: 1fr;
+	}
+
+	.question-option {
+		padding: 0.5rem;
+		font-size: 0.8rem;
+	}
 }
 </style>

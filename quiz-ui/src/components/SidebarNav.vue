@@ -2,9 +2,7 @@
 	<div>
 		<div :class="['sidebar', { collapsed: isCollapsed, overlay: isOverlay, visible: isVisible }]">
 			<router-link to="/" class="no-hover">
-				<div class="logo">
-					<img src="/src/assets/logo.png" alt="Quiz Logo" class="logo-image" />
-				</div>
+				<img src="/src/assets/logo.png" alt="Quiz Logo" class="logo-image" />
 			</router-link>
 
 			<nav v-if="!isCollapsed">
@@ -19,8 +17,8 @@
 
 		<!-- Floating Toggle Button -->
 		<div class="toggle-btn floating" @click="toggleSidebar">
-			<span v-if="isCollapsed || isOverlay">▶️</span>
-			<span v-else>◀️</span>
+			<span v-if="isCollapsed || isOverlay">☰</span>
+			<span v-else>☰</span>
 		</div>
 	</div>
 </template>
@@ -128,11 +126,8 @@ export default {
 	display: none;
 }
 
-.logo {
-	margin-bottom: 2rem;
-}
-
 .logo-image {
+	margin: 40px 0;
 	max-width: 150px;
 	height: auto;
 }
@@ -215,19 +210,31 @@ nav a.to-bottom {
 	background-color: transparent;
 }
 
+/* Updated styles for the toggle button */
 .toggle-btn {
 	cursor: pointer;
 	align-self: flex-end;
 	background: var(--color-background-soft);
 	border: 1px solid var(--color-border);
 	border-radius: 50%;
-	padding: 0.5rem;
+	width: 50px;
+	/* Fixed width and height for a perfect circle */
+	height: 50px;
+	/* Fixed width and height for a perfect circle */
+	padding: 10;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+	user-select: none;
+	/* Make text non-selectable */
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .toggle-btn span {
 	font-size: 1.5rem;
 	display: block;
+	user-select: none;
+	/* Ensure text is non-selectable */
 }
 
 .floating {
